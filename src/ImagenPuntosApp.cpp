@@ -56,14 +56,14 @@ void ImagenPuntosApp::prepareSettings(Settings *settings)
 void ImagenPuntosApp::setup()
 {
 
-    surfaces.push_back(loadImage("/PROYECTOS/programacion/cinder/ImagenPuntos/resources/prueba2.jpg"));
-    surfaces.push_back(loadImage("/PROYECTOS/programacion/cinder/ImagenPuntos/resources/prueba4.jpg"));
+    surfaces.push_back(loadImage("prueba2.jpg"));
+    surfaces.push_back(loadImage("prueba4.jpg"));
 
     //surface = loadImage("/PROYECTOS/programacion/cinder/ImagenPuntos/resources/prueba4.jpg");
     //channel = Channel32f(loadImage("/PROYECTOS/programacion/cinder/ImagenPuntos/resources/prueba4.jpg"));
     MidiInit();
     //OpenMidiIn(1);
-    OpenMidiIn(1);
+    OpenMidiIn(9);
     xResolution = getWindowWidth() / resolution;
     yResolution = getWindowHeight() / resolution;
     particleController = ParticleController(xResolution, yResolution, resolution);
@@ -71,7 +71,7 @@ void ImagenPuntosApp::setup()
 
 void ImagenPuntosApp::mouseDown( MouseEvent event )
 {
-    exit(1);
+    quit();
 }
 
 void ImagenPuntosApp::update()
