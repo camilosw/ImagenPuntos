@@ -5,10 +5,7 @@
 
 #define INPUT_BUFFER_SIZE 100
 #define OUTPUT_BUFFER_SIZE 0
-#define DRIVER_INFO NULL
 #define TIME_PROC ((int32_t (*)(void *)) Pt_Time)
-#define TIME_INFO NULL
-#define TIME_START Pt_Start(1, 0, 0)
 
 void MidiInit();
 void OpenMidiIn(int in);

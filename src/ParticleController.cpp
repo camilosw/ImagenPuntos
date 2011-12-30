@@ -19,7 +19,8 @@ ParticleController::ParticleController(int xParticles, int yParticles, int resol
   }
 }
 
-void ParticleController::update(Surface surface, float MidiCtler1, float MidiCtler2, float MidiCtler3, float MidiCtler4, bool rndPosFlag, bool rndRadiusFlag)
+void ParticleController::update(Surface surface, float MidiCtler1, float MidiCtler2, float MidiCtler3, 
+                                float MidiCtler4, bool rndPosFlag, bool rndRadiusFlag)
 {
     MidiCtler1= (MidiCtler1/127);
     for(list<Particle>::iterator p = particles.begin(); p != particles.end(); p++) 

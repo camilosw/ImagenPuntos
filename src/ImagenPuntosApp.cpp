@@ -55,7 +55,6 @@ void ImagenPuntosApp::prepareSettings(Settings *settings)
 
 void ImagenPuntosApp::setup()
 {
-
     surfaces.push_back(loadImage("prueba2.jpg"));
     surfaces.push_back(loadImage("prueba4.jpg"));
 
@@ -126,12 +125,8 @@ void ImagenPuntosApp::update()
             if (DotControlBuffer>127) DotControlBuffer=127;
             DotControl=0;    
         }*/
-        
-        
       
     particleController.update(surfaces[imageNumber], DotControl, rControl, gControl, bControl, rndPosCtl, rndRadiusCtl);
-    
-
 }
 
 void ImagenPuntosApp::draw()
