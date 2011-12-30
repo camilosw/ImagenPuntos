@@ -11,7 +11,8 @@
 #define TIME_START Pt_Start(1, 0, 0)
 
 void MidiInit();
-void OpenMidiIn();
+void OpenMidiIn(int in);
 void CloseMidiIn();
 void MidiEnd();
-void ReadMidiControl(int MsgData1,int &CtlBuff);
+void ReadMidiControl(int MsgData1, int &CtlBuff);
+void ReadMidiControl(int StatusData, int &CtlBuff1, int &CtlBuff2);
