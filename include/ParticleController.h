@@ -9,7 +9,7 @@ class ParticleController
 public:
   ParticleController();
   ParticleController(int xParticles, int yParticles, int resolution);
-  void update(ci::Surface surface);
+  void update(ci::Surface surface, float MidiCtler1, float MidiCtler2, float MidiCtler3, float MidiCtler4, bool rndPosFlag , bool rndRadiusFlag);
   void draw();
 
   std::list<Particle> particles;
