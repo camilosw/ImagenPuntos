@@ -31,7 +31,7 @@ void ParticleController::update(Surface surface, float MidiCtler1, float MidiCtl
     float gray = (color.r / 255.0f + color.g / 255.0f + color.b / 255.0f) / 3.0f;
         //float radius = (gray);//+(MidiCtler1*4.5f);
         if (rndRadiusFlag==true) 
-        p->setRadius(MidiCtler1*7.0f+Rand::randFloat( 1.0f, 4.0f));
+        p->setRadius(MidiCtler1*Rand::randFloat( 1.0f, 10.0f));
         else p->setRadius(MidiCtler1*7.0f);
     p->setColor(Color(color.r / 255.0f, color.g / 255.0f, color.b / 255.0f));    
          Vec2f location = p->getLocation();
@@ -49,9 +49,9 @@ void ParticleController::update(Surface surface, float MidiCtler1, float MidiCtl
   //}
 }
 
-void ParticleController::draw()
+void ParticleController::draw(bool PartShapeCtl)
 {
   for(list<Particle>::iterator p = particles.begin(); p != particles.end(); p++) {
-    p->draw();
+     p->draw(PartShapeCtl);
   }
 }

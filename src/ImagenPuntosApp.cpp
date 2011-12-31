@@ -13,6 +13,7 @@ int nullCtl3=NULL;
 
 bool rndPosCtl=false;
 bool rndRadiusCtl=false;
+bool CircleCtl=false;
 
 int imageNumber = 1;
 int valueCtl;
@@ -49,20 +50,20 @@ public:
 
 void ImagenPuntosApp::prepareSettings(Settings *settings)
 {
-    settings->setWindowSize(600, 400);
+    settings->setWindowSize(843,843);
     settings->setFrameRate(30);
 }
 
 void ImagenPuntosApp::setup()
 {
-    surfaces.push_back(loadImage("prueba2.jpg"));
-    surfaces.push_back(loadImage("prueba4.jpg"));
+    surfaces.push_back(loadImage("/PROYECTOS/programacion/cinder/ImagenPuntosGit/resources/greco01.jpg"));
+    surfaces.push_back(loadImage("/PROYECTOS/programacion/cinder/ImagenPuntosGit/resources/greco02.jpg"));
 
-    //surface = loadImage("/PROYECTOS/programacion/cinder/ImagenPuntos/resources/prueba4.jpg");
-    //channel = Channel32f(loadImage("/PROYECTOS/programacion/cinder/ImagenPuntos/resources/prueba4.jpg"));
+    //surface = loadImage("/PROYECTOS/programacion/cinder/ImagenPuntosGit/resources/elgreco01.jpg");
+    //channel = Channel32f(loadImage("/PROYECTOS/programacion/cinder/ImagenPuntosGit/resources/elgreco02.jpg"));
     MidiInit();
-    //OpenMidiIn(1);
-    OpenMidiIn(9);
+    OpenMidiIn(1);
+    //OpenMidiIn(9);
     xResolution = getWindowWidth() / resolution;
     yResolution = getWindowHeight() / resolution;
     particleController = ParticleController(xResolution, yResolution, resolution);
@@ -98,6 +99,8 @@ void ImagenPuntosApp::update()
     if (valueCtl==0x4a)rndPosCtl=false;
     if (valueCtl==0x29)rndRadiusCtl=false;
     if (valueCtl==0x2a)rndRadiusCtl=true;
+    if (valueCtl==0x56)CircleCtl=true;
+    if (valueCtl==0x32)CircleCtl=false;
     if(nullCtl1==10)
     {
         if(DotControl>=41) 
@@ -134,7 +137,7 @@ void ImagenPuntosApp::draw()
     // clear out the window with black
     gl::clear( Color( 0, 0, 0 ) ); 
     if (surfaces[imageNumber])
-        particleController.draw();
+        particleController.draw(CircleCtl);
     //gl::draw(gl::Texture(surface));
    // if (surface && channel)
      //   particleController.draw();

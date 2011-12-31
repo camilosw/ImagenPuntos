@@ -8,7 +8,7 @@ class Particle
 {
 public:
     Particle(ci::Vec2f location);
-    void draw();
+     void draw(bool PartShape);
     
     inline void setLocation(Vec2f value) { location = value; }
     inline void setRadius(float value) { radius = value; }
