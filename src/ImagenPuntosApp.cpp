@@ -50,7 +50,7 @@ public:
 
 void ImagenPuntosApp::prepareSettings(Settings *settings)
 {
-    settings->setWindowSize(843,843);
+    settings->setWindowSize(843,600);
     settings->setFrameRate(30);
 }
 
@@ -62,8 +62,11 @@ void ImagenPuntosApp::setup()
     //surface = loadImage("/PROYECTOS/programacion/cinder/ImagenPuntosGit/resources/elgreco01.jpg");
     //channel = Channel32f(loadImage("/PROYECTOS/programacion/cinder/ImagenPuntosGit/resources/elgreco02.jpg"));
     MidiInit();
-    OpenMidiIn(1);
-    //OpenMidiIn(9);
+    
+    
+    OpenMidiIn(GetMidiDevice());
+    
+    //OpenMidiIn(1);
     xResolution = getWindowWidth() / resolution;
     yResolution = getWindowHeight() / resolution;
     particleController = ParticleController(xResolution, yResolution, resolution);
@@ -73,44 +76,45 @@ void ImagenPuntosApp::mouseDown( MouseEvent event )
 {
     quit();
 }
+//Mapping para teclado MIDI standar
 
 void ImagenPuntosApp::update()
 {
-    ReadMidiControl(0xe0,nullCtl1,DotControl);
+    ReadMidiControl(0x01,DotControl);
     //ReadMidiControl(0xb0,nullCtl1,DotControl);
     
     //ReadMidiControl(0x01,ResControl);
    // ReadMidiControl(0xe9,nullCtl2,DotControl);
-    ReadMidiControl(0xe9,nullCtl2,ResControl);
+    ReadMidiControl(0x07,ResControl);
     //DotControl=((DotControl*127)+DotControl)+(nullCtl2);
     //ReadMidiControl(0x15,ResControl);
     
     ReadMidiControl(0x90,valueCtl,nullCtl3);
-    if(valueCtl==0x68 ||valueCtl==0x70 ||valueCtl==0x78 ||valueCtl==0x70||valueCtl==0x7a) valueCtl=0;
+    //if(valueCtl==0x68 ||valueCtl==0x70 ||valueCtl==0x78 ||valueCtl==0x70||valueCtl==0x7a) valueCtl=0;
     //ReadMidiControl(0x10,valueCtl2);
     
     //ReadMidiControl(0x58,imageNumberCtl);
     //ReadMidiControl(0x19,rControl);
     //ReadMidiControl(0x1a,gControl);
     //ReadMidiControl(0x1b,bControl);
-    if (valueCtl==0x57) imageNumber=1;
-    if (valueCtl==0x58) imageNumber=0;
-    if (valueCtl==0x2b) rndPosCtl=true;
-    if (valueCtl==0x4a)rndPosCtl=false;
-    if (valueCtl==0x29)rndRadiusCtl=false;
-    if (valueCtl==0x2a)rndRadiusCtl=true;
-    if (valueCtl==0x56)CircleCtl=true;
-    if (valueCtl==0x32)CircleCtl=false;
-    if(nullCtl1==10)
-    {
-        if(DotControl>=41) 
-            {
-                cout<<"41!"<<endl;
-            if (DotControlBuffer>0) DotControlBuffer-=2;
-            }
-    
-    if (DotControl<=6) DotControlBuffer+=2;
-    } 
+    if (valueCtl==0x3c) imageNumber=1;
+    if (valueCtl==0x3e) imageNumber=0;
+    if (valueCtl==0x40) rndPosCtl=true;
+    if (valueCtl==0x41)rndPosCtl=false;
+    if (valueCtl==0x43)rndRadiusCtl=true;
+    if (valueCtl==0x45)rndRadiusCtl=false;
+    if (valueCtl==0x47)CircleCtl=true;
+    if (valueCtl==0x48)CircleCtl=false;
+    //if(nullCtl1==10)
+    //{
+    //    if(DotControl>=41) 
+    //        {
+    //            cout<<"41!"<<endl;
+    //        if (DotControlBuffer>0) DotControlBuffer-=2;
+    //        }
+    //
+    //if (DotControl<=6) DotControlBuffer+=2;
+    //} 
     
     if (surfaces[imageNumber])
         ResController=(resolution+((ResControl/resolution)));

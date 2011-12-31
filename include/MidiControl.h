@@ -1,5 +1,8 @@
 #pragma once
 #include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+
 #include "portmidi.h"
 #include "porttime.h"
 
@@ -8,6 +11,7 @@
 #define TIME_PROC ((int32_t (*)(void *)) Pt_Time)
 
 void MidiInit();
+int GetMidiDevice();
 void OpenMidiIn(int in);
 void CloseMidiIn();
 void MidiEnd();
