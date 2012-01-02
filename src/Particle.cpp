@@ -9,19 +9,18 @@ Particle::Particle(Vec2f location)
   this->location = location;
 }
 
-void Particle::draw(bool PartShape)
+void Particle::draw()
 {
     gl::color(color);
     
-    if(PartShape==true)
+    if (shape == Square)
     {
         float x1 = location.x - radius;
         float y1 = location.y - radius;
         float x2 = location.x + radius;
         float y2 = location.y + radius;
         gl::drawSolidRect(Rectf(x1, y1, x2, y2));    
-    }
-    
+    }    
     else 
     {
         //radius = cos( location.y * 0.1f ) + sin( location.x * 0.1f ) + 2.0f;
@@ -31,5 +30,4 @@ void Particle::draw(bool PartShape)
         
         gl::drawSolidCircle(location, radius);
     }	
-    
 }

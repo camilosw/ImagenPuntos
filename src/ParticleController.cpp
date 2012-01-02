@@ -20,26 +20,29 @@ ParticleController::ParticleController(int xParticles, int yParticles, int resol
 }
 
 void ParticleController::update(Surface surface, float MidiCtler1, float MidiCtler2, float MidiCtler3, 
-                                float MidiCtler4, bool rndPosFlag, bool rndRadiusFlag)
+                                float MidiCtler4, bool rndPosFlag, bool rndRadiusFlag, Shapes shape)
 {
-    MidiCtler1= (MidiCtler1/127);
-    for(list<Particle>::iterator p = particles.begin(); p != particles.end(); p++) 
-    {
-    // Obtiene el color de un pixel de la imagen
-    ColorA8u color = surface.getPixel(p->getLocation());
-    // Obtiene el nivel de gris
-    float gray = (color.r / 255.0f + color.g / 255.0f + color.b / 255.0f) / 3.0f;
-        //float radius = (gray);//+(MidiCtler1*4.5f);
-        if (rndRadiusFlag==true) 
+    MidiCtler1 = (MidiCtler1/127);
+    for(list<Particle>::iterator p = particles.begin(); p != particles.end(); p++) {
+      // Obtiene el color de un pixel de la imagen
+      ColorA8u color = surface.getPixel(p->getLocation());
+      // Obtiene el nivel de gris
+      float gray = (color.r / 255.0f + color.g / 255.0f + color.b / 255.0f) / 3.0f;
+      //float radius = (gray);//+(MidiCtler1*4.5f);
+      if (rndRadiusFlag==true) {
         p->setRadius(MidiCtler1*Rand::randFloat( 1.0f, 10.0f));
-        else p->setRadius(MidiCtler1*7.0f);
-    p->setColor(Color(color.r / 255.0f, color.g / 255.0f, color.b / 255.0f));    
-         Vec2f location = p->getLocation();
-        if (rndPosFlag==true)
-            location = p->getLocation()+ Rand::randVec2f();        
-    p->setLocation(location);
-    }
-    
+      }        
+      else {
+        p->setRadius(MidiCtler1*7.0f);
+      }
+      p->setColor(Color(color.r / 255.0f, color.g / 255.0f, color.b / 255.0f));    
+      Vec2f location = p->getLocation();
+      if (rndPosFlag==true) {
+        location = p->getLocation()+ Rand::randVec2f();
+      }              
+      p->setLocation(location);
+      p->setShape(shape);
+    }    
     
     //for(list<Particle>::iterator p = particles.begin(); p != particles.end(); p++) {
     //  float radius = (channel.getValue(p->location)* MidiCtler1*4.5f);
@@ -49,9 +52,9 @@ void ParticleController::update(Surface surface, float MidiCtler1, float MidiCtl
   //}
 }
 
-void ParticleController::draw(bool PartShapeCtl)
+void ParticleController::draw()
 {
   for(list<Particle>::iterator p = particles.begin(); p != particles.end(); p++) {
-     p->draw(PartShapeCtl);
+     p->draw();
   }
 }

@@ -44,8 +44,6 @@ public:
     
     ParticleController particleController;
     vector<Surface> surfaces;
-    //Surface surface;
-    //Channel32f channel;
 };
 
 void ImagenPuntosApp::prepareSettings(Settings *settings)
@@ -56,14 +54,11 @@ void ImagenPuntosApp::prepareSettings(Settings *settings)
 
 void ImagenPuntosApp::setup()
 {
-    surfaces.push_back(loadImage("/PROYECTOS/programacion/cinder/ImagenPuntosGit/resources/greco01.jpg"));
-    surfaces.push_back(loadImage("/PROYECTOS/programacion/cinder/ImagenPuntosGit/resources/greco02.jpg"));
+    surfaces.push_back(loadImage("../resources/greco01.jpg"));
+    surfaces.push_back(loadImage("../resources/greco02.jpg"));
 
-    //surface = loadImage("/PROYECTOS/programacion/cinder/ImagenPuntosGit/resources/elgreco01.jpg");
-    //channel = Channel32f(loadImage("/PROYECTOS/programacion/cinder/ImagenPuntosGit/resources/elgreco02.jpg"));
     MidiInit();
-    
-    
+       
     OpenMidiIn(GetMidiDevice());
     
     //OpenMidiIn(1);
@@ -132,8 +127,10 @@ void ImagenPuntosApp::update()
             if (DotControlBuffer>127) DotControlBuffer=127;
             DotControl=0;    
         }*/
-      
-    particleController.update(surfaces[imageNumber], DotControl, rControl, gControl, bControl, rndPosCtl, rndRadiusCtl);
+    
+    Shapes shape = CircleCtl == true ? Square : Circle;
+    particleController.update(surfaces[imageNumber], DotControl, rControl, gControl, bControl, 
+      rndPosCtl, rndRadiusCtl, shape);
 }
 
 void ImagenPuntosApp::draw()
@@ -141,10 +138,7 @@ void ImagenPuntosApp::draw()
     // clear out the window with black
     gl::clear( Color( 0, 0, 0 ) ); 
     if (surfaces[imageNumber])
-        particleController.draw(CircleCtl);
-    //gl::draw(gl::Texture(surface));
-   // if (surface && channel)
-     //   particleController.draw();
+        particleController.draw();
 }
 
 CINDER_APP_BASIC( ImagenPuntosApp, RendererGl )
