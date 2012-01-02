@@ -1,6 +1,7 @@
-
 #include "MidiControl.h"
+
 #define STRING_MAX 80
+
 const PmDeviceInfo *devInfo;
 
 PmStream *midiIn, *midiOut;
@@ -29,8 +30,7 @@ void MidiInit()
 }
 
 int GetMidiDevice()
-{
-   
+{   
     int nDev =Pm_CountDevices();
     int i;
     for(i=0; i<(nDev/2); i++)
@@ -43,17 +43,20 @@ int GetMidiDevice()
         //printf("(%i) %s\n", i, info->interf); //This parameter shows who is the midi system
         }
     } 
-// The user can chose a midi in and a midi out port
+  // The user can chose a midi in and a midi out port
 
-int in = get_number("Type input number: ");
-return in;
+  int in = get_number("Type input number: ");
+  return in;
 }
+
 void OpenMidiIn(int in)
 {
   Pm_OpenInput(&midiIn, in, NULL, INPUT_BUFFER_SIZE, TIME_PROC, NULL);
     
+  // Ignora todos los mensajes de tiempo real
   Pm_SetFilter(midiIn, PM_FILT_REALTIME | PM_FILT_CLOCK );
     
+  // Limpia el buffer que contiene los mensajes midi
   while (Pm_Poll(midiIn)) {
     Pm_Read(midiIn, buffer, 1);
   }
