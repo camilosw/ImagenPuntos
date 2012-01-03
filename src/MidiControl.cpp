@@ -8,6 +8,7 @@ PmStream *midiIn, *midiOut;
 PmTimestamp timestamp;
 PmEvent buffer[128];
 PmError status;
+PmEvent *event;
 
 int get_number(char *prompt)
 {
@@ -22,11 +23,13 @@ int get_number(char *prompt)
     return i;
 }
 
-
 void MidiInit()
 {
   Pm_Initialize();
   Pt_Start(1, 0, 0);
+
+  // Reserva memoria para el objeto que contendrá los mensajes midi
+  event = (PmEvent *)malloc(sizeof(PmEvent));
 }
 
 int GetMidiDevice()
@@ -84,6 +87,42 @@ void ReadMidiControl(int StatusData,int &CtlBuff1,int &CtlBuff2)
     CtlBuff2 = Pm_MessageData2(buffer[0].message);
   }
 }   
+
+bool ReadMidiMessage(Messages &type, int &id, int &value) {
+  if (Pm_Read(midiIn, event, sizeof(long)) > 0) {
+    long status = Pm_MessageStatus(event->message);
+    long data1 = Pm_MessageData1(event->message);
+    long data2 = Pm_MessageData2(event->message);
+    
+    // Verfica el tipo de mensaje, eliminando la información del canal
+    switch (status & 0xF0) {
+    case NoteOn:
+      type = NoteOn;
+      id = data1;
+      value = data2;
+      break;
+    case ControllerChange:
+      type = ControllerChange;
+      id = data1;
+      value = data2;
+      break;
+    case ProgramChange:
+      type = ProgramChange;
+      id = 0;
+      value = data1;
+      break;
+    case PitchBend:
+      type = PitchBend;
+      id = 0;
+      value = data2;
+      break;
+    }
+
+    // TODO: agregar los demás tipos de mensajes
+    return true;
+  }
+  return false;
+}
 
 void CloseMidiIn()
 {
