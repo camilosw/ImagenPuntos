@@ -13,7 +13,8 @@ class Particle
 {
 public:
     Particle(ci::Vec2f location);
-     void draw();
+    Particle(ci::Vec2f location, int x, int y);
+    void draw();
     
     inline void setLocation(Vec2f value) { location = value; }
     inline void setRadius(float value) { radius = value; }
@@ -24,8 +25,11 @@ public:
     inline float getRadius() { return radius; }
     inline Color getColor() { return color; }
     inline Shapes getShape() { return shape; }    
+    inline int getX() { return x; }
+    inline int getY() { return y; }
     
 private:
+    int x, y;
     Vec2f location;
     float radius;
     Color color;

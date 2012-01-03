@@ -8,13 +8,19 @@ using std::list;
 ParticleController::ParticleController()
 {
 }
-ParticleController::ParticleController(int xParticles, int yParticles, int resolution)
+ParticleController::ParticleController(int width, int height, int resolution)
 {
+  this->width = width;
+  this->height = height;
+  this->resolution = resolution;
+  int xParticles = width / resolution;
+  int yParticles = height / resolution;
+    
   for (int y = 0; y < yParticles; y++) {
     for (int x = 0; x < xParticles; x++) {
       float xPos = (x + 0.5f) * resolution;
       float yPos = (y + 0.5f) * resolution;
-        particles.push_back(Particle(Vec2f(xPos, yPos)));
+        particles.push_back(Particle(Vec2f(xPos, yPos), x, y));
     }
   }
 }
@@ -24,6 +30,18 @@ void ParticleController::update(Surface surface, float MidiCtler1, float MidiCtl
 {
     MidiCtler1 = (MidiCtler1/127);
     for(list<Particle>::iterator p = particles.begin(); p != particles.end(); p++) {
+
+      // Modifica la posición de la partícula según la resolución;
+      float xPos = (p->getX() + 0.5f) * resolution;
+      float yPos = (p->getY() + 0.5f) * resolution;
+      p->setLocation(Vec2f(xPos, yPos));
+
+      // Determina si la partícula es visible. Si no lo es, continúa con la siguiente
+      if ( (p->getLocation().x - resolution) > width ||
+           (p->getLocation().y - resolution) > height) {
+        continue;
+      }
+
       // Obtiene el color de un pixel de la imagen
       ColorA8u color = surface.getPixel(p->getLocation());
       // Obtiene el nivel de gris
@@ -36,11 +54,11 @@ void ParticleController::update(Surface surface, float MidiCtler1, float MidiCtl
         p->setRadius(MidiCtler1*7.0f);
       }
       p->setColor(Color(color.r / 255.0f, color.g / 255.0f, color.b / 255.0f));    
-      Vec2f location = p->getLocation();
-      if (rndPosFlag==true) {
-        location = p->getLocation()+ Rand::randVec2f();
-      }              
-      p->setLocation(location);
+      
+      if (rndPosFlag) {
+        Vec2f location = p->getLocation() + Rand::randVec2f();
+        p->setLocation(location);
+      }                    
       p->setShape(shape);
     }    
     
@@ -55,6 +73,11 @@ void ParticleController::update(Surface surface, float MidiCtler1, float MidiCtl
 void ParticleController::draw()
 {
   for(list<Particle>::iterator p = particles.begin(); p != particles.end(); p++) {
-     p->draw();
+    // Determina si la partícula es visible. Si no lo es, la ignora y continúa con la siguiente
+    if ( (p->getLocation().x - resolution) > width ||
+          (p->getLocation().y - resolution) > height) {
+      continue;
+    }
+    p->draw();
   }
 }

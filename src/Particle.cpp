@@ -9,6 +9,13 @@ Particle::Particle(Vec2f location)
   this->location = location;
 }
 
+Particle::Particle(Vec2f location, int x, int y)
+{
+  this->location = location;
+  this->x = x;
+  this->y = y;
+}
+
 void Particle::draw()
 {
     gl::color(color);

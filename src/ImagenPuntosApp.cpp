@@ -70,9 +70,7 @@ void ImagenPuntosApp::setup()
     //OpenMidiIn(GetMidiDevice());
     
     OpenMidiIn(9);
-    xResolution = getWindowWidth() / resolution;
-    yResolution = getWindowHeight() / resolution;
-    particleController = ParticleController(xResolution, yResolution, resolution);
+    particleController = ParticleController(getWindowWidth(), getWindowHeight(), resolution);
 }
 
 void ImagenPuntosApp::mouseDown( MouseEvent event )
@@ -123,7 +121,7 @@ void ImagenPuntosApp::update()
         if (id == 0x4A) {
           DotControl = value;
         }
-        else if (id == 0x07) {
+        else if (id == 0x47) {
           ResControl = value;
         }
       }
@@ -155,10 +153,8 @@ void ImagenPuntosApp::update()
   //if (DotControl<=6) DotControlBuffer+=2;
   //} 
     
-  if (surfaces[imageNumber])
-      ResController = (resolution + ((ResControl / resolution)));
-  particleController = ParticleController(xResolution, yResolution, ResController) ;
-     
+  //if (surfaces[imageNumber])
+      
       /*if(DotControl==65)
       {
           DotControlBuffer--; 
@@ -173,6 +169,9 @@ void ImagenPuntosApp::update()
       }*/
     
   Shapes shape = CircleCtl == true ? Square : Circle;
+  
+  ResController = (resolution + ((ResControl / resolution)));
+  particleController.setResolution(ResController);
   particleController.update(surfaces[imageNumber], DotControl, rControl, gControl, bControl, 
     rndPosCtl, rndRadiusCtl, shape);
 }
