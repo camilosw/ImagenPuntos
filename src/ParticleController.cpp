@@ -25,16 +25,23 @@ ParticleController::ParticleController(int width, int height, int resolution)
   }
 }
 
+void ParticleController::setResolution(int value)
+{
+  resolution = value;
+
+  for(list<Particle>::iterator p = particles.begin(); p != particles.end(); p++) {
+    // Modifica la posición de la partícula según la resolución;
+    float xPos = (p->getX() + 0.5f) * resolution;
+    float yPos = (p->getY() + 0.5f) * resolution;
+    p->setLocation(Vec2f(xPos, yPos));
+  }
+}
+
 void ParticleController::update(Surface surface, float MidiCtler1, float MidiCtler2, float MidiCtler3, 
                                 float MidiCtler4, bool rndPosFlag, bool rndRadiusFlag, Shapes shape)
 {
     MidiCtler1 = (MidiCtler1/127);
     for(list<Particle>::iterator p = particles.begin(); p != particles.end(); p++) {
-
-      // Modifica la posición de la partícula según la resolución;
-      float xPos = (p->getX() + 0.5f) * resolution;
-      float yPos = (p->getY() + 0.5f) * resolution;
-      p->setLocation(Vec2f(xPos, yPos));
 
       // Determina si la partícula es visible. Si no lo es, continúa con la siguiente
       if ( (p->getLocation().x - resolution) > width ||

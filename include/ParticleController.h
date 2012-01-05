@@ -13,7 +13,7 @@ public:
               bool rndPosFlag , bool rndRadiusFlag, Shapes shape);
   void draw();
 
-  void setResolution(int value) { resolution = value; }
+  void setResolution(int value);
 
 private:
   std::list<Particle> particles;
