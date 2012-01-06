@@ -9,6 +9,7 @@ class ParticleController
 public:
   ParticleController();
   ParticleController(int width, int height, int resolution);
+  // TODO: convertir los parámetros en métodos set
   void update(ci::Surface surface, float MidiCtler1, float MidiCtler2, float MidiCtler3, float MidiCtler4, 
               bool rndPosFlag , bool rndRadiusFlag, Shapes shape);
   void draw();

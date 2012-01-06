@@ -113,8 +113,8 @@ void ImagenPuntosApp::update()
   case 1:
     // Lee todos los mensajes midi que estén pendientes en el buffer
     Messages type;
-    int id, value;
-    while (ReadMidiMessage(type, id, value)) {
+    int channel, id, value;
+    while (ReadMidiMessage(type, channel, id, value)) {
       
       // Verifica si el mensaje midi corresponde a una perilla o un control deslizable
       if (type == ControllerChange) {

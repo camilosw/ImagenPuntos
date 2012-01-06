@@ -88,12 +88,15 @@ void ReadMidiControl(int StatusData,int &CtlBuff1,int &CtlBuff2)
   }
 }   
 
-bool ReadMidiMessage(Messages &type, int &id, int &value) {
+bool ReadMidiMessage(Messages &type, int &channel, int &id, int &value) {
   if (Pm_Read(midiIn, event, sizeof(long)) > 0) {
     long status = Pm_MessageStatus(event->message);
     long data1 = Pm_MessageData1(event->message);
     long data2 = Pm_MessageData2(event->message);
     
+    // Obtiene el canal
+    channel = status & 0x0F;
+
     // Verfica el tipo de mensaje, eliminando la información del canal
     switch (status & 0xF0) {
     case NoteOn:

@@ -26,4 +26,4 @@ void CloseMidiIn();
 void MidiEnd();
 void ReadMidiControl(int MsgData1, int &CtlBuff);
 void ReadMidiControl(int StatusData, int &CtlBuff1, int &CtlBuff2);
-bool ReadMidiMessage(Messages &type, int &id, int &value);
+bool ReadMidiMessage(Messages &type, int &channel, int &id, int &value);
