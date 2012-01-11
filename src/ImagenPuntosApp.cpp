@@ -51,10 +51,10 @@ void ImagenPuntosApp::setup()
     midiDetected = false;
 
     int nullCtl1, nullCtl2, nullCtl3 = NULL;
-    bool rndPosCtl, rndRadiusCtl, CircleCtl = false;
+    bool rndPosCtl= false, rndRadiusCtl= false, CircleCtl = false;
 
     imageNumber = 1;
-    profile = 1;
+    profile = 0;
     resolution = 5;
     DotControl = 64;
     DotControlBuffer = 0;
@@ -62,14 +62,19 @@ void ImagenPuntosApp::setup()
     xControl, yControl = 0;
     rControl, gControl, bControl = 127;
 
-    surfaces.push_back(loadImage("../resources/greco01.jpg"));
-    surfaces.push_back(loadImage("../resources/greco02.jpg"));
+    
+    //surfaces.push_back(loadImage("../resources/greco01.jpg"));
+    //surfaces.push_back(loadImage("../resources/greco02.jpg"));
+
+    
+    surfaces.push_back(loadImage("/PROYECTOS/programacion/cinder/ImagenPuntosGit/resources/greco01.jpg"));
+    surfaces.push_back(loadImage("/PROYECTOS/programacion/cinder/ImagenPuntosGit/resources/greco02.jpg"));
 
     MidiInit();
        
     //OpenMidiIn(GetMidiDevice());
     
-    OpenMidiIn(9);
+    OpenMidiIn(1);
     particleController = ParticleController(getWindowWidth(), getWindowHeight(), resolution);
 }
 
@@ -77,43 +82,50 @@ void ImagenPuntosApp::mouseDown( MouseEvent event )
 {
     quit();
 }
-//Mapping para teclado MIDI standar
 
 void ImagenPuntosApp::update()
 {
-  switch (profile) {
-  case 0:
-    ReadMidiControl(0x01,DotControl);
-    //ReadMidiControl(0xb0,nullCtl1,DotControl);
-    
-    //ReadMidiControl(0x01,ResControl);
-   // ReadMidiControl(0xe9,nullCtl2,DotControl);
-    ReadMidiControl(0x07,ResControl);
-    //DotControl=((DotControl*127)+DotControl)+(nullCtl2);
-    //ReadMidiControl(0x15,ResControl);
-    
-    ReadMidiControl(0x90,valueCtl,nullCtl3);
-    //if(valueCtl==0x68 ||valueCtl==0x70 ||valueCtl==0x78 ||valueCtl==0x70||valueCtl==0x7a) valueCtl=0;
-    //ReadMidiControl(0x10,valueCtl2);
-    
-    //ReadMidiControl(0x58,imageNumberCtl);
-    //ReadMidiControl(0x19,rControl);
-    //ReadMidiControl(0x1a,gControl);
-    //ReadMidiControl(0x1b,bControl);
-    if (valueCtl==0x3c) imageNumber=1;
-    if (valueCtl==0x3e) imageNumber=0;
-    if (valueCtl==0x40) rndPosCtl=true;
-    if (valueCtl==0x41) rndPosCtl=false;
-    if (valueCtl==0x43) rndRadiusCtl=true;
-    if (valueCtl==0x45) rndRadiusCtl=false;
-    if (valueCtl==0x47) CircleCtl=true;
-    if (valueCtl==0x48) CircleCtl=false;
-    break;
-  
-  case 1:
-    // Lee todos los mensajes midi que estén pendientes en el buffer
     Messages type;
     int channel, id, value;
+    
+    switch (profile) 
+    {
+    //Alphatrack map
+    case 0:
+        while (ReadMidiMessage(type, channel, id, value)) {
+                
+            // Verifica si el mensaje midi corresponde a una perilla o un control deslizable
+            if (type == PitchBend) 
+                {
+                if (channel == 0x00)
+                    {
+                    DotControl = value;
+                    }
+                else if (channel== 0x09) 
+                    {
+                        ResControl = value;
+                    }
+                }
+                
+                // Verifica si corresponde a una nota
+                if (type == NoteOn) 
+                {
+                    if (id == 0x57) imageNumber = 1;        // <-
+                    if (id == 0x58) imageNumber = 0;        // ->
+                    if (id == 0x2b) rndPosCtl = true;       // Plugin
+                    if (id == 0x4a) rndPosCtl = false;      // auto
+                    if (id == 0x2a) rndRadiusCtl = true;    // pan
+                    if (id == 0x29) rndRadiusCtl = false;   // send
+                    if (id == 0x56) CircleCtl = true;       // loop
+                    if (id == 0x32) CircleCtl = false;      // flip
+                }
+            }
+            
+    break;
+    case 1:
+    //Mapping para teclado MIDI standard
+
+    // Lee todos los mensajes midi que estén pendientes en el buffer
     while (ReadMidiMessage(type, channel, id, value)) {
       
       // Verifica si el mensaje midi corresponde a una perilla o un control deslizable
