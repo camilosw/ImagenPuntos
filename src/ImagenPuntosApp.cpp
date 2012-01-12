@@ -51,8 +51,11 @@ void ImagenPuntosApp::setup()
     midiDetected = false;
 
     int nullCtl1, nullCtl2, nullCtl3 = NULL;
-    bool rndPosCtl= false, rndRadiusCtl= false, CircleCtl = false;
+    bool rndPosCtl,rndRadiusCtl, CircleCtl;
 
+    rndPosCtl=false;
+    rndRadiusCtl=false;
+    CircleCtl=false;
     imageNumber = 1;
     profile = 0;
     resolution = 5;
