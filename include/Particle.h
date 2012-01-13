@@ -14,7 +14,7 @@
 
 #define CIRCLE 0
 #define SQUARE 1
-#define SEGMENTS 8
+#define SEGMENTS 10
 
 enum Shapes { Circle, Square };
 
@@ -25,6 +25,7 @@ class Particle
 public:
     Particle(ci::Vec2f location);
     Particle(ci::Vec2f location, int x, int y);
+	~Particle();
     void draw();
     
     void setLocation(Vec2f value) { location = value; }

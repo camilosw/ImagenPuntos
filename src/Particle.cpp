@@ -18,6 +18,10 @@ Particle::Particle(Vec2f location, int x, int y)
   this->y = y;
 }
 
+Particle::~Particle() {
+	delete [] verts;
+}
+
 void Particle::draw()
 {
     gl::color(color);
@@ -54,5 +58,4 @@ void Particle::drawSolidCircle( const Vec2f &center, int radius )
 	glVertexPointer( 2, GL_FLOAT, 0, verts );
 	glDrawArrays( GL_TRIANGLE_FAN, 0, SEGMENTS + 2 );
 	glDisableClientState( GL_VERTEX_ARRAY );
-	delete [] verts;
 }
