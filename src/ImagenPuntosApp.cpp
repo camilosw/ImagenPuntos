@@ -23,19 +23,19 @@ public:
     bool midiDetected;
 
     int nullCtl1, nullCtl2, nullCtl3;
-    bool rndPosCtl, rndRadiusCtl, CircleCtl;
+    bool randomPositionControl, randomRadiusControl;
+    Shapes shapeControl;
 
     int imageNumber;
     int profile;      // Identificador de la configuración según el dispositivo físico que se usará
     int valueCtl;
     int valueCtl2;
     int resolution;
-    int ResController;
+    int resolutionController;
     int xResolution; 
     int yResolution;
-    int DotControl;
-    int DotControlBuffer;
-    int ResControl;
+    int radiusControl;
+    int resolutionControl;
     int xControl;
     int yControl;
     int rControl;
@@ -50,28 +50,24 @@ void ImagenPuntosApp::setup()
 
     midiDetected = false;
 
-    int nullCtl1, nullCtl2, nullCtl3 = NULL;
-    bool rndPosCtl,rndRadiusCtl, CircleCtl;
-
-    rndPosCtl=false;
-    rndRadiusCtl=false;
-    CircleCtl=false;
+    randomPositionControl = false;
+    randomRadiusControl = false;
+    shapeControl = Circle;
     imageNumber = 1;
-    profile = 0;
+    profile = 1;
     resolution = 5;
-    DotControl = 64;
-    DotControlBuffer = 0;
-    ResControl = 0;
+    radiusControl = 64;
+    resolutionControl = 0;
     xControl, yControl = 0;
     rControl, gControl, bControl = 127;
 
     
-    //surfaces.push_back(loadImage("../resources/greco01.jpg"));
-    //surfaces.push_back(loadImage("../resources/greco02.jpg"));
+    surfaces.push_back(loadImage("../resources/greco01.jpg"));
+    surfaces.push_back(loadImage("../resources/greco02.jpg"));
 
     
-    surfaces.push_back(loadImage("/PROYECTOS/programacion/cinder/ImagenPuntosGit/resources/greco01.jpg"));
-    surfaces.push_back(loadImage("/PROYECTOS/programacion/cinder/ImagenPuntosGit/resources/greco02.jpg"));
+    //surfaces.push_back(loadImage("/PROYECTOS/programacion/cinder/ImagenPuntosGit/resources/greco01.jpg"));
+    //surfaces.push_back(loadImage("/PROYECTOS/programacion/cinder/ImagenPuntosGit/resources/greco02.jpg"));
 
     MidiInit();
        
@@ -102,11 +98,11 @@ void ImagenPuntosApp::update()
                 {
                 if (channel == 0x00)
                     {
-                    DotControl = value;
+                    radiusControl = value;
                     }
                 else if (channel== 0x09) 
                     {
-                        ResControl = value;
+                        resolutionControl = value;
                     }
                 }
                 
@@ -115,12 +111,12 @@ void ImagenPuntosApp::update()
                 {
                     if (id == 0x57) imageNumber = 1;        // <-
                     if (id == 0x58) imageNumber = 0;        // ->
-                    if (id == 0x2b) rndPosCtl = true;       // Plugin
-                    if (id == 0x4a) rndPosCtl = false;      // auto
-                    if (id == 0x2a) rndRadiusCtl = true;    // pan
-                    if (id == 0x29) rndRadiusCtl = false;   // send
-                    if (id == 0x56) CircleCtl = true;       // loop
-                    if (id == 0x32) CircleCtl = false;      // flip
+                    if (id == 0x2b) randomPositionControl = true;       // Plugin
+                    if (id == 0x4a) randomPositionControl = false;      // auto
+                    if (id == 0x2a) randomRadiusControl = true;    // pan
+                    if (id == 0x29) randomRadiusControl = false;   // send
+                    if (id == 0x56) shapeControl = Circle;       // loop
+                    if (id == 0x32) shapeControl = Square;      // flip
                 }
             }
             
@@ -134,61 +130,36 @@ void ImagenPuntosApp::update()
       // Verifica si el mensaje midi corresponde a una perilla o un control deslizable
       if (type == ControllerChange) {
         if (id == 0x4A) {
-          DotControl = value;
+          radiusControl = value;
         }
         else if (id == 0x47) {
-          ResControl = value;
+          resolutionControl = value;
         }
       }
 
       // Verifica si corresponde a una nota
       if (type == NoteOn) {
-        if (id == 0x3c) imageNumber = 1;        // C4 (DO)
-        if (id == 0x3e) imageNumber = 0;        // D4 (RE)
-        if (id == 0x40) rndPosCtl = true;       // E4 (MI)
-        if (id == 0x41) rndPosCtl = false;      // F4 (FA)
-        if (id == 0x43) rndRadiusCtl = true;    // G4 (SOL)
-        if (id == 0x45) rndRadiusCtl = false;   // A4 (LA)
-        if (id == 0x47) CircleCtl = true;       // B4 (SI)
-        if (id == 0x48) CircleCtl = false;      // C5 (DO)
+        if (id == 0x3c) imageNumber = 1;                // C4 (DO)
+        if (id == 0x3e) imageNumber = 0;                // D4 (RE)
+        if (id == 0x40) randomPositionControl = true;   // E4 (MI)
+        if (id == 0x41) randomPositionControl = false;  // F4 (FA)
+        if (id == 0x43) randomRadiusControl = true;     // G4 (SOL)
+        if (id == 0x45) randomRadiusControl = false;    // A4 (LA)
+        if (id == 0x47) shapeControl = Circle;          // B4 (SI)
+        if (id == 0x48) shapeControl = Square;          // C5 (DO)
       }
     }
     
     break;
   }
 
-  //if(nullCtl1==10)
-  //{
-  //    if(DotControl>=41) 
-  //        {
-  //            cout<<"41!"<<endl;
-  //        if (DotControlBuffer>0) DotControlBuffer-=2;
-  //        }
-  //
-  //if (DotControl<=6) DotControlBuffer+=2;
-  //} 
-    
-  //if (surfaces[imageNumber])
-      
-      /*if(DotControl==65)
-      {
-          DotControlBuffer--; 
-          if (DotControlBuffer<0) DotControlBuffer=0;
-          DotControl=0;
-      }
-      if(DotControl==1)
-      {
-          DotControlBuffer ++;
-          if (DotControlBuffer>127) DotControlBuffer=127;
-          DotControl=0;    
-      }*/
-    
-  Shapes shape = CircleCtl == true ? Square : Circle;
-  
-  ResController = (resolution + ((ResControl / resolution)));
-  particleController.setResolution(ResController);
-  particleController.update(surfaces[imageNumber], DotControl, rControl, gControl, bControl, 
-    rndPosCtl, rndRadiusCtl, shape);
+  resolutionController = (resolution + ((resolutionControl / resolution)));
+  particleController.setResolution(resolutionController);
+  particleController.setRadius(radiusControl);
+  particleController.setShape(shapeControl);
+  particleController.setRandomRadius(randomRadiusControl);
+  particleController.setRandomPosition(randomPositionControl);
+  particleController.update(surfaces[imageNumber]);
 }
 
 void ImagenPuntosApp::draw()

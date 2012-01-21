@@ -37,10 +37,9 @@ void ParticleController::setResolution(int value)
   }
 }
 
-void ParticleController::update(Surface surface, float MidiCtler1, float MidiCtler2, float MidiCtler3, 
-                                float MidiCtler4, bool rndPosFlag, bool rndRadiusFlag, Shapes shape)
+void ParticleController::update(Surface surface)
 {
-    MidiCtler1 = (MidiCtler1/127);
+    radius = (radius/127);
     for(list<Particle>::iterator p = particles.begin(); p != particles.end(); p++) {
 
       // Determina si la partícula es visible. Si no lo es, continúa con la siguiente
@@ -53,24 +52,26 @@ void ParticleController::update(Surface surface, float MidiCtler1, float MidiCtl
       ColorA8u color = surface.getPixel(p->getLocation());
       // Obtiene el nivel de gris
       float gray = (color.r / 255.0f + color.g / 255.0f + color.b / 255.0f) / 3.0f;
-      //float radius = (gray);//+(MidiCtler1*4.5f);
-      if (rndRadiusFlag==true) {
-        p->setRadius(MidiCtler1*Rand::randFloat( 1.0f, 10.0f));
+      //float radius = (gray);//+(radius*4.5f);
+      p->setColor(Color(color.r / 255.0f, color.g / 255.0f, color.b / 255.0f));    
+            
+      if (randomRadius) {
+        p->setRadius(radius * Rand::randFloat( 1.0f, 10.0f));
       }        
       else {
-        p->setRadius(MidiCtler1*7.0f);
+        p->setRadius(radius * 7.0f);
       }
-      p->setColor(Color(color.r / 255.0f, color.g / 255.0f, color.b / 255.0f));    
       
-      if (rndPosFlag) {
+      if (randomPosition) {
         Vec2f location = p->getLocation() + Rand::randVec2f();
         p->setLocation(location);
       }                    
+      
       p->setShape(shape);
     }    
     
     //for(list<Particle>::iterator p = particles.begin(); p != particles.end(); p++) {
-    //  float radius = (channel.getValue(p->location)* MidiCtler1*4.5f);
+    //  float radius = (channel.getValue(p->location)* radius*4.5f);
        
     //ColorA8u color = surface.getPixel(p->location);
     //p->update(radius, Color(color.r / (MidiCtler2*2.0f)+0.1, color.g / (MidiCtler3*2.0f)+0.1, color.b / (MidiCtler4*2.0f)+0.1));
