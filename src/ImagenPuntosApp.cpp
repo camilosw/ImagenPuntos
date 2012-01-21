@@ -139,14 +139,14 @@ void ImagenPuntosApp::update()
 
       // Verifica si corresponde a una nota
       if (type == NoteOn) {
-        if (id == 0x3c) imageNumber = 1;                // C4 (DO)
-        if (id == 0x3e) imageNumber = 0;                // D4 (RE)
-        if (id == 0x40) randomPositionControl = true;   // E4 (MI)
-        if (id == 0x41) randomPositionControl = false;  // F4 (FA)
-        if (id == 0x43) randomRadiusControl = true;     // G4 (SOL)
-        if (id == 0x45) randomRadiusControl = false;    // A4 (LA)
-        if (id == 0x47) shapeControl = Circle;          // B4 (SI)
-        if (id == 0x48) shapeControl = Square;          // C5 (DO)
+        if (id == 0x3c) imageNumber = 1;                                                // C4 (DO)
+        if (id == 0x3e) imageNumber = 0;                                                // D4 (RE)
+        if (id == 0x40)                                                                 // E4 (MI)
+            randomPositionControl = !particleController.getRandomPosition();   
+        if (id == 0x41)                                                                 // F4 (FA)
+            randomRadiusControl = !particleController.getRandomRadius();     
+        if (id == 0x43)                                                                 // G4 (SOL)
+            shapeControl = particleController.getShape() == Circle ? Square : Circle;          
       }
     }
     
