@@ -14,7 +14,7 @@ using namespace std;
 class ImagenPuntosApp : public AppBasic {
 public:
     void setup();
-    void mouseDown( MouseEvent event );	
+    void keyDown( KeyEvent event );
     void update();
     void draw();
     
@@ -77,9 +77,14 @@ void ImagenPuntosApp::setup()
     particleController = ParticleController(getWindowWidth(), getWindowHeight(), resolution);
 }
 
-void ImagenPuntosApp::mouseDown( MouseEvent event )
+void ImagenPuntosApp::keyDown( KeyEvent event ) 
 {
+  switch(event.getCode())
+  {
+  case KeyEvent::KEY_ESCAPE:
     quit();
+    break;
+  }
 }
 
 void ImagenPuntosApp::update()
