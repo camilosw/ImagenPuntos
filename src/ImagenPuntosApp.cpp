@@ -54,7 +54,7 @@ void ImagenPuntosApp::setup()
     randomRadiusControl = false;
     shapeControl = Circle;
     imageNumber = 1;
-    profile = 1;
+    profile = 0;
     resolution = 5;
     radiusControl = 64;
     resolutionControl = 0;
@@ -62,12 +62,12 @@ void ImagenPuntosApp::setup()
     rControl, gControl, bControl = 127;
 
     
-    surfaces.push_back(loadImage("../resources/greco01.jpg"));
-    surfaces.push_back(loadImage("../resources/greco02.jpg"));
+    //surfaces.push_back(loadImage("../resources/greco01.jpg"));
+    //surfaces.push_back(loadImage("../resources/greco02.jpg"));
 
     
-    //surfaces.push_back(loadImage("/PROYECTOS/programacion/cinder/ImagenPuntosGit/resources/greco01.jpg"));
-    //surfaces.push_back(loadImage("/PROYECTOS/programacion/cinder/ImagenPuntosGit/resources/greco02.jpg"));
+    surfaces.push_back(loadImage("/PROYECTOS/programacion/cinder/ImagenPuntosGit/resources/greco01.jpg"));
+    surfaces.push_back(loadImage("/PROYECTOS/programacion/cinder/ImagenPuntosGit/resources/greco02.jpg"));
 
     MidiInit();
        
@@ -122,7 +122,11 @@ void ImagenPuntosApp::update()
                     if (id == 0x29) randomRadiusControl = false;   // send
                     if (id == 0x56) shapeControl = Circle;       // loop
                     if (id == 0x32) shapeControl = Square;      // flip
-                }
+                    if (id == 0x36) randomPositionControl = !particleController.getRandomPosition();    // Plugin
+                    if (id == 0x37)randomRadiusControl = !particleController.getRandomRadius();       // auto
+                    if (id == 0x38) shapeControl = particleController.getShape() == Circle ? Square : Circle;  // flip
+                
+                                   }
             }
             
     break;
