@@ -6,12 +6,12 @@
 #include "ParticleController.h"
 #include <vector>
 #include <iostream>
-#include "SimpleGUI.h"
+//#include "SimpleGUI.h"
 
 using namespace ci;
 using namespace ci::app;
 using namespace std;
-using namespace mowa::sgui;
+//using namespace mowa::sgui;
 
 class ImagenPuntosApp : public AppBasic {
 public:
@@ -21,7 +21,7 @@ public:
     void draw();
     
 private:
-    SimpleGUI* gui;
+    //SimpleGUI* gui;
     ParticleController particleController;
     vector<Surface> surfaces;
     bool midiDetected;
@@ -38,8 +38,8 @@ private:
     int resolutionController;
     int xResolution; 
     int yResolution;
-    int radiusControl;
-    int resolutionControl;
+    float radiusControl;
+    float resolutionControl;
     int xControl;
     int yControl;
     int rControl;
@@ -52,9 +52,9 @@ void ImagenPuntosApp::setup()
     setWindowSize(843,600);
     setFrameRate(30);
 
-    gui = new SimpleGUI(this);
-    gui->lightColor = ColorA(1, 1, 0, 1);	
-    gui->addLabel("Dispositivos MIDI");
+    //gui = new SimpleGUI(this);
+    //gui->lightColor = ColorA(1, 1, 0, 1);	
+    //gui->addLabel("Dispositivos MIDI");
 
     midiDetected = false;
 
@@ -64,8 +64,8 @@ void ImagenPuntosApp::setup()
     imageNumber = 1;
     profile = 1;
     resolution = 5;
-    radiusControl = 64;
-    resolutionControl = 0;
+    radiusControl = 1;
+    resolutionControl = 1;
     xControl, yControl = 0;
     rControl, gControl, bControl = 127;
         
@@ -103,17 +103,18 @@ void ImagenPuntosApp::update()
     //Alphatrack map
     case 0:
         while (ReadMidiMessage(type, channel, id, value)) {
+          float valueF = lmap((float)value, 0.0f, 127.0f, 0.0f, 1.0f);
                 
             // Verifica si el mensaje midi corresponde a una perilla o un control deslizable
             if (type == PitchBend) 
                 {
                 if (channel == 0x00)
                     {
-                    radiusControl = value;
+                    radiusControl = valueF;
                     }
                 else if (channel== 0x09) 
                     {
-                        resolutionControl = value;
+                        resolutionControl = valueF;
                     }
                 }
                 
@@ -128,7 +129,11 @@ void ImagenPuntosApp::update()
                     if (id == 0x29) randomRadiusControl = false;   // send
                     if (id == 0x56) shapeControl = Circle;       // loop
                     if (id == 0x32) shapeControl = Square;      // flip
-                }
+                    if (id == 0x36) randomPositionControl = !particleController.getRandomPosition();    // Plugin
+                    if (id == 0x37)randomRadiusControl = !particleController.getRandomRadius();       // auto
+                    if (id == 0x38) shapeControl = particleController.getShape() == Circle ? Square : Circle;  // flip
+                
+                                   }
             }
             
     break;
@@ -137,14 +142,15 @@ void ImagenPuntosApp::update()
 
     // Lee todos los mensajes midi que estén pendientes en el buffer
     while (ReadMidiMessage(type, channel, id, value)) {
-      
+      float valueF = lmap((float)value, 0.0f, 127.0f, 0.0f, 1.0f);
+
       // Verifica si el mensaje midi corresponde a una perilla o un control deslizable
       if (type == ControllerChange) {
         if (id == 0x4A) {
-          radiusControl = value;
+          radiusControl = valueF; 
         }
         else if (id == 0x47) {
-          resolutionControl = value;
+          resolutionControl = valueF;
         }
       }
 
@@ -164,8 +170,7 @@ void ImagenPuntosApp::update()
     break;
   }
 
-  resolutionController = (resolution + ((resolutionControl / resolution)));
-  particleController.setResolution(resolutionController);
+  particleController.setResolution(resolutionControl * 25 + resolution);
   particleController.setRadius(radiusControl);
   particleController.setShape(shapeControl);
   particleController.setRandomRadius(randomRadiusControl);
@@ -177,9 +182,10 @@ void ImagenPuntosApp::draw()
 {
     // clear out the window with black
     gl::clear( Color( 0, 0, 0 ) ); 
+
     if (surfaces[imageNumber])
         particleController.draw();
-    gui->draw();
+    //gui->draw();
 }
 
 CINDER_APP_BASIC( ImagenPuntosApp, RendererGl )

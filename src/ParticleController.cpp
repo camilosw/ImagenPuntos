@@ -39,7 +39,6 @@ void ParticleController::setResolution(int value)
 
 void ParticleController::update(Surface surface)
 {
-    radius = (radius/127);
     for(list<Particle>::iterator p = particles.begin(); p != particles.end(); p++) {
 
       // Determina si la partícula es visible. Si no lo es, continúa con la siguiente
