@@ -6,10 +6,12 @@
 #include "ParticleController.h"
 #include <vector>
 #include <iostream>
+#include "SimpleGUI.h"
 
 using namespace ci;
 using namespace ci::app;
 using namespace std;
+using namespace mowa::sgui;
 
 class ImagenPuntosApp : public AppBasic {
 public:
@@ -18,6 +20,8 @@ public:
     void update();
     void draw();
     
+private:
+    SimpleGUI* gui;
     ParticleController particleController;
     vector<Surface> surfaces;
     bool midiDetected;
@@ -48,6 +52,10 @@ void ImagenPuntosApp::setup()
     setWindowSize(843,600);
     setFrameRate(30);
 
+    gui = new SimpleGUI(this);
+    gui->lightColor = ColorA(1, 1, 0, 1);	
+    gui->addLabel("Dispositivos MIDI");
+
     midiDetected = false;
 
     randomPositionControl = false;
@@ -60,12 +68,10 @@ void ImagenPuntosApp::setup()
     resolutionControl = 0;
     xControl, yControl = 0;
     rControl, gControl, bControl = 127;
-
-    
+        
     surfaces.push_back(loadImage("../resources/greco01.jpg"));
     surfaces.push_back(loadImage("../resources/greco02.jpg"));
 
-    
     //surfaces.push_back(loadImage("/PROYECTOS/programacion/cinder/ImagenPuntosGit/resources/greco01.jpg"));
     //surfaces.push_back(loadImage("/PROYECTOS/programacion/cinder/ImagenPuntosGit/resources/greco02.jpg"));
 
@@ -173,6 +179,7 @@ void ImagenPuntosApp::draw()
     gl::clear( Color( 0, 0, 0 ) ); 
     if (surfaces[imageNumber])
         particleController.draw();
+    gui->draw();
 }
 
 CINDER_APP_BASIC( ImagenPuntosApp, RendererGl )

@@ -47,7 +47,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\include;..\..\..\cinder_0.8.3_vc2010\include;..\..\..\cinder_0.8.3_vc2010\boost</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;..\..\..\cinder_0.8.3_vc2010\include;..\..\..\cinder_0.8.3_vc2010\boost;..\..\..\cinder_0.8.3_vc2010\blocks\SimpleGUI\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -104,12 +104,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\cinder_0.8.3_vc2010\blocks\SimpleGUI\src\SimpleGUI.cpp" />
     <ClCompile Include="..\src\ImagenPuntosApp.cpp" />
     <ClCompile Include="..\src\MidiControl.cpp" />
     <ClCompile Include="..\src\Particle.cpp" />
     <ClCompile Include="..\src\ParticleController.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\cinder_0.8.3_vc2010\blocks\SimpleGUI\include\SimpleGUI.h" />
     <ClInclude Include="..\include\MidiControl.h" />
     <ClInclude Include="..\include\Particle.h" />
     <ClInclude Include="..\include\ParticleController.h" />
