@@ -2,6 +2,7 @@
 #include "cinder/gl/gl.h"
 #include "cinder/gl/Texture.h"
 #include "cinder/ImageIo.h"
+#include "cinder/qtime/QuickTime.h"
 #include "MidiControl.h"
 #include "ParticleController.h"
 #include <vector>
@@ -19,7 +20,8 @@ public:
     void keyDown( KeyEvent event );
     void update();
     void draw();
-    
+    qtime::MovieSurface	myMovie;
+    bool	VideoPlay;
 private:
     //SimpleGUI* gui;
     ParticleController particleController;
@@ -49,9 +51,11 @@ private:
 
 void ImagenPuntosApp::setup()
 {
-    setWindowSize(843,600);
+    setWindowSize(640,480);
     setFrameRate(30);
-
+    VideoPlay=false;
+    myMovie= qtime::MovieSurface(loadResource("Medea.mov"));
+    myMovie.setLoop( true, true );
     //gui = new SimpleGUI(this);
     //gui->lightColor = ColorA(1, 1, 0, 1);	
     //gui->addLabel("Dispositivos MIDI");
@@ -62,19 +66,19 @@ void ImagenPuntosApp::setup()
     randomRadiusControl = false;
     shapeControl = Circle;
     imageNumber = 1;
-    profile = 1;
+    profile = 0;
     resolution = 5;
     radiusControl = 1;
     resolutionControl = 1;
     xControl, yControl = 0;
     rControl, gControl, bControl = 127;
         
-    surfaces.push_back(loadImage("../resources/greco01.jpg"));
-    surfaces.push_back(loadImage("../resources/greco02.jpg"));
+    //surfaces.push_back(loadImage("../resources/greco01.jpg"));
+    //surfaces.push_back(loadImage("../resources/greco02.jpg"));
 
-    //surfaces.push_back(loadImage("/PROYECTOS/programacion/cinder/ImagenPuntosGit/resources/greco01.jpg"));
-    //surfaces.push_back(loadImage("/PROYECTOS/programacion/cinder/ImagenPuntosGit/resources/greco02.jpg"));
-
+    surfaces.push_back(loadImage("/PROYECTOS/programacion/cinder/ImagenPuntosGit/resources/greco01.jpg"));
+    surfaces.push_back(loadImage("/PROYECTOS/programacion/cinder/ImagenPuntosGit/resources/greco02.jpg"));
+    surfaces.push_back(loadImage("/PROYECTOS/programacion/cinder/ImagenPuntosGit/resources/el_greco_pieta.jpg"));
     MidiInit();
        
     //OpenMidiIn(GetMidiDevice());
@@ -90,11 +94,23 @@ void ImagenPuntosApp::keyDown( KeyEvent event )
   case KeyEvent::KEY_ESCAPE:
     quit();
     break;
+    case KeyEvent::KEY_v:
+      {
+      VideoPlay=!VideoPlay;
+          
+        if(VideoPlay==true)  // Play
+              myMovie.play();
+        else myMovie.stop();  
+          
+      }
+    break;
+    
   }
 }
 
 void ImagenPuntosApp::update()
 {
+   
     Messages type;
     int channel, id, value;
     
@@ -121,19 +137,31 @@ void ImagenPuntosApp::update()
                 // Verifica si corresponde a una nota
                 if (type == NoteOn) 
                 {
-                    if (id == 0x57) imageNumber = 1;        // <-
-                    if (id == 0x58) imageNumber = 0;        // ->
-                    if (id == 0x2b) randomPositionControl = true;       // Plugin
-                    if (id == 0x4a) randomPositionControl = false;      // auto
-                    if (id == 0x2a) randomRadiusControl = true;    // pan
-                    if (id == 0x29) randomRadiusControl = false;   // send
-                    if (id == 0x56) shapeControl = Circle;       // loop
-                    if (id == 0x32) shapeControl = Square;      // flip
-                    if (id == 0x36) randomPositionControl = !particleController.getRandomPosition();    // Plugin
-                    if (id == 0x37)randomRadiusControl = !particleController.getRandomRadius();       // auto
-                    if (id == 0x38) shapeControl = particleController.getShape() == Circle ? Square : Circle;  // flip
-                
-                                   }
+                    if ((id == 0x57)&&(value==0x7f)) if(imageNumber >0)imageNumber--;        // <-
+                    if (    (id == 0x58)&&(value==0x7f)) if(imageNumber <2) imageNumber++;        // ->
+                    if (id == 0x2b) randomPositionControl = !particleController.getRandomPosition();      // Plugin
+                    if (id == 0x4a) randomRadiusControl = !particleController.getRandomRadius();       // auto
+                    if (id == 0x2a) shapeControl = particleController.getShape() == Circle ? Square : Circle;  // pan
+                   // if (id == 0x29) randomRadiusControl = false;   // send
+                   // if (id == 0x56) shapeControl = Circle;       // loop
+                   // if (id == 0x32) shapeControl = Square;      // flip
+                    if ((id == 0x36)&&(value==0x7f)) randomPositionControl = !particleController.getRandomPosition();    // Plugin
+                    if ((id == 0x37)&&(value==0x7f))randomRadiusControl = !particleController.getRandomRadius();       // auto
+                    if ((id == 0x38)&&(value==0x7f)) shapeControl = particleController.getShape() == Circle ? Square : Circle;  // flip
+                    if ((id == 0x5e) &&(value==0x7f))
+                        {
+                        if(VideoPlay!=true)
+                            {
+                            VideoPlay=true;  // Play
+                            myMovie.play(); 
+                            }
+                        }
+                    if ((id == 0x5d) &&(value==0x7f))
+                        {
+                        VideoPlay=false;  // Stop
+                        myMovie.stop();
+                        }               
+                }
             }
             
     break;
@@ -170,12 +198,18 @@ void ImagenPuntosApp::update()
     break;
   }
 
-  particleController.setResolution(resolutionControl * 25 + resolution);
+  
+particleController.setResolution(resolutionControl * 25 + resolution);
   particleController.setRadius(radiusControl);
   particleController.setShape(shapeControl);
   particleController.setRandomRadius(randomRadiusControl);
   particleController.setRandomPosition(randomPositionControl);
-  particleController.update(surfaces[imageNumber]);
+    if(VideoPlay==true)
+    { 
+    Surface frame = myMovie.getSurface();
+    particleController.update(frame);
+    }
+    else particleController.update(surfaces[imageNumber]);
 }
 
 void ImagenPuntosApp::draw()

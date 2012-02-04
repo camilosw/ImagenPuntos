@@ -19,8 +19,11 @@
 		5323E6B60EAFCA7E003A9687 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B50EAFCA7E003A9687 /* QTKit.framework */; };
 		53E3CDFC0E86099300238D2B /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E3CDFB0E86099300238D2B /* Carbon.framework */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		FA31871214DC4FB500CBFD0F /* greco02.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FA31871014DC4FB500CBFD0F /* greco02.jpg */; };
+		FA31871314DC4FB500CBFD0F /* greco01.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FA31871114DC4FB500CBFD0F /* greco01.jpg */; };
 		FAA147CA147999700020B007 /* Particle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA147C8147999700020B007 /* Particle.cpp */; };
 		FAA147CB147999700020B007 /* ParticleController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA147C9147999700020B007 /* ParticleController.cpp */; };
+		FAA7A9A114DC9E270072D7D8 /* Medea.mov in Resources */ = {isa = PBXBuildFile; fileRef = FAA7A9A014DC9E270072D7D8 /* Medea.mov */; };
 		FAD4673C1479A48900F62897 /* MidiControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAD4673A1479A48900F62897 /* MidiControl.cpp */; };
 		FAD467491479B0CE00F62897 /* libportmidi.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD467481479B0CE00F62897 /* libportmidi.dylib */; };
 /* End PBXBuildFile section */
@@ -45,11 +48,14 @@
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* ImagenPuntos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImagenPuntos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA297F5114AE86C800ABB447 /* MidiControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MidiControl.h; path = ../include/MidiControl.h; sourceTree = "<group>"; };
+		FA31871014DC4FB500CBFD0F /* greco02.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = greco02.jpg; path = ../resources/greco02.jpg; sourceTree = "<group>"; };
+		FA31871114DC4FB500CBFD0F /* greco01.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = greco01.jpg; path = ../resources/greco01.jpg; sourceTree = "<group>"; };
 		FAA147C8147999700020B007 /* Particle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Particle.cpp; path = ../src/Particle.cpp; sourceTree = "<group>"; };
 		FAA147C9147999700020B007 /* ParticleController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ParticleController.cpp; path = ../src/ParticleController.cpp; sourceTree = "<group>"; };
 		FAA147CD1479998B0020B007 /* Particle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Particle.h; path = ../include/Particle.h; sourceTree = "<group>"; };
 		FAA147CE1479998B0020B007 /* ParticleController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParticleController.h; path = ../include/ParticleController.h; sourceTree = "<group>"; };
 		FAA147CF1479998B0020B007 /* Resources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Resources.h; path = ../include/Resources.h; sourceTree = "<group>"; };
+		FAA7A9A014DC9E270072D7D8 /* Medea.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; name = Medea.mov; path = ../resources/Medea.mov; sourceTree = "<group>"; };
 		FAD4673A1479A48900F62897 /* MidiControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MidiControl.cpp; path = ../src/MidiControl.cpp; sourceTree = "<group>"; };
 		FAD4673E1479A72600F62897 /* porttime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = porttime.h; path = ../include/porttime.h; sourceTree = "<group>"; };
 		FAD4673F1479A72600F62897 /* portmidi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = portmidi.h; path = ../include/portmidi.h; sourceTree = "<group>"; };
@@ -154,6 +160,9 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FA31871014DC4FB500CBFD0F /* greco02.jpg */,
+				FA31871114DC4FB500CBFD0F /* greco01.jpg */,
+				FAA7A9A014DC9E270072D7D8 /* Medea.mov */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				00CCAF14116A9FEE008396D5 /* CinderApp.icns */,
 			);
@@ -217,6 +226,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				00CCAF15116A9FEE008396D5 /* CinderApp.icns in Resources */,
+				FA31871214DC4FB500CBFD0F /* greco02.jpg in Resources */,
+				FA31871314DC4FB500CBFD0F /* greco01.jpg in Resources */,
+				FAA7A9A114DC9E270072D7D8 /* Medea.mov in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
