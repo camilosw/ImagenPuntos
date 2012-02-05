@@ -49,7 +49,7 @@ private:
 
 void ImagenPuntosApp::setup()
 {
-    setWindowSize(843,600);
+    setWindowSize(1024, 768);
     setFrameRate(30);
 
     //gui = new SimpleGUI(this);
