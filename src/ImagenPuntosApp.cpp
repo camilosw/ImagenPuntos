@@ -51,6 +51,7 @@ private:
 
 void ImagenPuntosApp::setup()
 {
+
     setWindowSize(640,480);
     setFrameRate(30);
     VideoPlay=false;
@@ -76,9 +77,9 @@ void ImagenPuntosApp::setup()
     //surfaces.push_back(loadImage("../resources/greco01.jpg"));
     //surfaces.push_back(loadImage("../resources/greco02.jpg"));
 
-    surfaces.push_back(loadImage("/PROYECTOS/programacion/cinder/ImagenPuntosGit/resources/greco01.jpg"));
-    surfaces.push_back(loadImage("/PROYECTOS/programacion/cinder/ImagenPuntosGit/resources/greco02.jpg"));
-    surfaces.push_back(loadImage("/PROYECTOS/programacion/cinder/ImagenPuntosGit/resources/el_greco_pieta.jpg"));
+    surfaces.push_back(loadImage(loadResource("greco01.jpg")));
+    surfaces.push_back(loadImage(loadResource("greco02.jpg")));
+    surfaces.push_back(loadImage(loadResource("el_greco_pieta.jpg")));
     MidiInit();
        
     //OpenMidiIn(GetMidiDevice());
@@ -122,7 +123,29 @@ void ImagenPuntosApp::update()
           float valueF = lmap((float)value, 0.0f, 127.0f, 0.0f, 1.0f);
                 
             // Verifica si el mensaje midi corresponde a una perilla o un control deslizable
-            if (type == PitchBend) 
+           if (type == ControllerChange)
+           {
+               if (id == 0x10)
+               {
+                   if((value>=1)&&(value<=3)) radiusControl+=0.1;
+                   else radiusControl-=0.1;
+                   if(radiusControl<0) radiusControl=0;
+                   if(radiusControl>2) radiusControl=2;
+                   
+                   
+               }
+               if (id == 0x11)
+               {
+                   if((value>=1)&&(value<=3)) resolutionControl+=0.1;
+                   else resolutionControl-=0.1;
+                   if(resolutionControl<0) resolutionControl=0;
+                   
+               }
+           
+           
+           
+           }   
+           /*if (type == PitchBend) 
                 {
                 if (channel == 0x00)
                     {
@@ -133,21 +156,21 @@ void ImagenPuntosApp::update()
                         resolutionControl = valueF;
                     }
                 }
-                
+             */   
                 // Verifica si corresponde a una nota
                 if (type == NoteOn) 
                 {
-                    if ((id == 0x57)&&(value==0x7f)) if(imageNumber >0)imageNumber--;        // <-
-                    if (    (id == 0x58)&&(value==0x7f)) if(imageNumber <2) imageNumber++;        // ->
-                    if (id == 0x2b) randomPositionControl = !particleController.getRandomPosition();      // Plugin
-                    if (id == 0x4a) randomRadiusControl = !particleController.getRandomRadius();       // auto
-                    if (id == 0x2a) shapeControl = particleController.getShape() == Circle ? Square : Circle;  // pan
+                    if ((id == 0x5b)&&(value==0x7f)) if(imageNumber >0)imageNumber--;        // <-
+                    if ((id == 0x5c)&&(value==0x7f)) if(imageNumber <2) imageNumber++;        // ->
+                    if (id == 0x36) randomPositionControl = !particleController.getRandomPosition();      // Plugin
+                    if (id == 0x37) randomRadiusControl = !particleController.getRandomRadius();       // auto
+                    if (id == 0x38) shapeControl = particleController.getShape() == Circle ? Square : Circle;  // pan
                    // if (id == 0x29) randomRadiusControl = false;   // send
                    // if (id == 0x56) shapeControl = Circle;       // loop
                    // if (id == 0x32) shapeControl = Square;      // flip
-                    if ((id == 0x36)&&(value==0x7f)) randomPositionControl = !particleController.getRandomPosition();    // Plugin
-                    if ((id == 0x37)&&(value==0x7f))randomRadiusControl = !particleController.getRandomRadius();       // auto
-                    if ((id == 0x38)&&(value==0x7f)) shapeControl = particleController.getShape() == Circle ? Square : Circle;  // flip
+                    if ((id == 0x57)&&(value==0x7f)) randomPositionControl = !particleController.getRandomPosition();    // Plugin
+                    if ((id == 0x58)&&(value==0x7f))randomRadiusControl = !particleController.getRandomRadius();       // auto
+                    if ((id == 0x56)&&(value==0x7f)) shapeControl = particleController.getShape() == Circle ? Square : Circle;  // flip
                     if ((id == 0x5e) &&(value==0x7f))
                         {
                         if(VideoPlay!=true)
