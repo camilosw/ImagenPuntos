@@ -26,6 +26,7 @@ private:
     //SimpleGUI* gui;
     ParticleController particleController;
     vector<Surface> surfaces;
+    gl::Texture background;
     bool midiDetected;
 
     int nullCtl1, nullCtl2, nullCtl3;
@@ -52,10 +53,10 @@ private:
 void ImagenPuntosApp::setup()
 {
 
-    setWindowSize(640,480);
+    setWindowSize(720,480);
     setFrameRate(30);
     VideoPlay=false;
-    myMovie= qtime::MovieSurface(loadResource("Medea.mov"));
+    myMovie= qtime::MovieSurface(loadResource("negfxh264.mov"));
     myMovie.setLoop( true, true );
     //gui = new SimpleGUI(this);
     //gui->lightColor = ColorA(1, 1, 0, 1);	
@@ -76,7 +77,7 @@ void ImagenPuntosApp::setup()
         
     //surfaces.push_back(loadImage("../resources/greco01.jpg"));
     //surfaces.push_back(loadImage("../resources/greco02.jpg"));
-
+    background=gl::Texture(loadImage(loadResource("DSC01566.JPG")));
     surfaces.push_back(loadImage(loadResource("greco01.jpg")));
     surfaces.push_back(loadImage(loadResource("greco02.jpg")));
     surfaces.push_back(loadImage(loadResource("el_greco_pieta.jpg")));
@@ -239,7 +240,7 @@ void ImagenPuntosApp::draw()
 {
     // clear out the window with black
     gl::clear( Color( 0, 0, 0 ) ); 
-
+    gl::draw( background, getWindowBounds() );
     if (surfaces[imageNumber])
         particleController.draw();
     //gui->draw();

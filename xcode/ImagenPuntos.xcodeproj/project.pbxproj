@@ -27,6 +27,9 @@
 		FAA7A9A114DC9E270072D7D8 /* Medea.mov in Resources */ = {isa = PBXBuildFile; fileRef = FAA7A9A014DC9E270072D7D8 /* Medea.mov */; };
 		FAD4673C1479A48900F62897 /* MidiControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAD4673A1479A48900F62897 /* MidiControl.cpp */; };
 		FAD467491479B0CE00F62897 /* libportmidi.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD467481479B0CE00F62897 /* libportmidi.dylib */; };
+		FAF460D314E07CBE00A94D1B /* negfxh264.mov in Resources */ = {isa = PBXBuildFile; fileRef = FAF460D114E07CBE00A94D1B /* negfxh264.mov */; };
+		FAF460D414E07CBE00A94D1B /* negh264.mov in Resources */ = {isa = PBXBuildFile; fileRef = FAF460D214E07CBE00A94D1B /* negh264.mov */; };
+		FAF460D714E08C7E00A94D1B /* DSC01566.JPG in Resources */ = {isa = PBXBuildFile; fileRef = FAF460D614E08C7E00A94D1B /* DSC01566.JPG */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +65,9 @@
 		FAD4673E1479A72600F62897 /* porttime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = porttime.h; path = ../include/porttime.h; sourceTree = "<group>"; };
 		FAD4673F1479A72600F62897 /* portmidi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = portmidi.h; path = ../include/portmidi.h; sourceTree = "<group>"; };
 		FAD467481479B0CE00F62897 /* libportmidi.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libportmidi.dylib; path = usr/local/lib/libportmidi.dylib; sourceTree = SDKROOT; };
+		FAF460D114E07CBE00A94D1B /* negfxh264.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; name = negfxh264.mov; path = ../resources/negfxh264.mov; sourceTree = "<group>"; };
+		FAF460D214E07CBE00A94D1B /* negh264.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; name = negh264.mov; path = ../resources/negh264.mov; sourceTree = "<group>"; };
+		FAF460D614E08C7E00A94D1B /* DSC01566.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = DSC01566.JPG; path = ../resources/DSC01566.JPG; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,10 +168,13 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FAF460D614E08C7E00A94D1B /* DSC01566.JPG */,
 				FA31871014DC4FB500CBFD0F /* greco02.jpg */,
 				FA31871114DC4FB500CBFD0F /* greco01.jpg */,
 				FAA6363A14DF220900C355A2 /* el_greco_pieta.jpg */,
 				FAA7A9A014DC9E270072D7D8 /* Medea.mov */,
+				FAF460D114E07CBE00A94D1B /* negfxh264.mov */,
+				FAF460D214E07CBE00A94D1B /* negh264.mov */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				00CCAF14116A9FEE008396D5 /* CinderApp.icns */,
 			);
@@ -233,6 +242,9 @@
 				FA31871314DC4FB500CBFD0F /* greco01.jpg in Resources */,
 				FAA7A9A114DC9E270072D7D8 /* Medea.mov in Resources */,
 				FAA6363B14DF220900C355A2 /* el_greco_pieta.jpg in Resources */,
+				FAF460D314E07CBE00A94D1B /* negfxh264.mov in Resources */,
+				FAF460D414E07CBE00A94D1B /* negh264.mov in Resources */,
+				FAF460D714E08C7E00A94D1B /* DSC01566.JPG in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
