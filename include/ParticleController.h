@@ -15,6 +15,7 @@ public:
 
   void setResolution(int value);
   void setRadius(float value) { radius = value; }
+  void setPosition(float value) { position = value; }
   void setShape(Shapes value) { shape = value; }  
   void setRandomRadius(bool value) { randomRadius = value; }
   void setRandomPosition(bool value) { randomPosition = value; }
@@ -34,6 +35,7 @@ private:
 
   int resolution;           // Distancia entre las partículas
   float radius;             // Radio de las partículas
+  float position;           // Posición en x de la imagen
   Shapes shape;             // Forma de las partículas (círculo o cuadrado)
   bool randomRadius;        // Determina si el tamaño es estático o varía de forma aleatoria
   bool randomPosition;      // Determina si la posición es estática o varía de forma aleatoria

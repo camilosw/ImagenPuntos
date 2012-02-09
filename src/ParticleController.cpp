@@ -39,35 +39,37 @@ void ParticleController::setResolution(int value)
 
 void ParticleController::update(Surface surface)
 {
-    for(list<Particle>::iterator p = particles.begin(); p != particles.end(); p++) {
+  float offset = lmap(position, 0.0f, 1.0f, -(float)width, (float)width);
+  for(list<Particle>::iterator p = particles.begin(); p != particles.end(); p++) {
 
-      // Determina si la partícula es visible. Si no lo es, continúa con la siguiente
-      if ( (p->getLocation().x - resolution) > width ||
-           (p->getLocation().y - resolution) > height) {
-        continue;
-      }
+    // Determina si la partícula es visible. Si no lo es, continúa con la siguiente
+    if ( (p->getLocation().x + offset - resolution) > width ||
+         (p->getLocation().x + offset - resolution) < 0 ||
+         (p->getLocation().y - resolution) > height) {
+      continue;
+    }
 
-      // Obtiene el color de un pixel de la imagen
-      ColorA8u color = surface.getPixel(p->getLocation());
-      // Obtiene el nivel de gris
-      float gray = (color.r / 255.0f + color.g / 255.0f + color.b / 255.0f) / 3.0f;
-      //float radius = (gray);//+(radius*4.5f);
-      p->setColor(Color(color.r / 255.0f, color.g / 255.0f, color.b / 255.0f));    
+    // Obtiene el color de un pixel de la imagen
+    ColorA8u color = surface.getPixel(p->getLocation() + Vec2f(offset, 0.0));
+    // Obtiene el nivel de gris
+    float gray = (color.r / 255.0f + color.g / 255.0f + color.b / 255.0f) / 3.0f;
+    //float radius = (gray);//+(radius*4.5f);
+    p->setColor(Color(color.r / 255.0f, color.g / 255.0f, color.b / 255.0f));    
             
-      if (randomRadius) {
-        p->setRadius(radius * Rand::randFloat( 1.0f, 10.0f));
-      }        
-      else {
-        p->setRadius(radius * 7.0f);
-      }
+    if (randomRadius) {
+      p->setRadius(radius * Rand::randFloat( 1.0f, 10.0f));
+    }        
+    else {
+      p->setRadius(radius * 7.0f);
+    }
       
-      if (randomPosition) {
-        Vec2f location = p->getLocation() + Rand::randVec2f();
-        p->setLocation(location);
-      }                    
+    if (randomPosition) {
+      Vec2f location = p->getLocation() + Rand::randVec2f();
+      p->setLocation(location);
+    }                    
       
-      p->setShape(shape);
-    }    
+    p->setShape(shape);
+  }    
     
     //for(list<Particle>::iterator p = particles.begin(); p != particles.end(); p++) {
     //  float radius = (channel.getValue(p->location)* radius*4.5f);
@@ -79,10 +81,12 @@ void ParticleController::update(Surface surface)
 
 void ParticleController::draw()
 {
+  float offset = lmap(position, 0.0f, 1.0f, -(float)width, (float)width);
   for(list<Particle>::iterator p = particles.begin(); p != particles.end(); p++) {
     // Determina si la partícula es visible. Si no lo es, la ignora y continúa con la siguiente
-    if ( (p->getLocation().x - resolution) > width ||
-          (p->getLocation().y - resolution) > height) {
+    if ( (p->getLocation().x + offset - resolution) > width ||
+         (p->getLocation().x + offset - resolution) < 0 ||
+         (p->getLocation().y - resolution) > height) {
       continue;
     }
     p->draw();

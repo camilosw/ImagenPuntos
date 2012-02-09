@@ -36,16 +36,10 @@ private:
 
     int imageNumber;
     int profile;      // Identificador de la configuración según el dispositivo físico que se usará
-    int valueCtl;
-    int valueCtl2;
     int resolution;
-    int resolutionController;
-    int xResolution; 
-    int yResolution;
     float radiusControl;
     float resolutionControl;
-    int xControl;
-    int yControl;
+    float positionControl;
     int rControl;
     int gControl;
     int bControl;
@@ -65,15 +59,15 @@ void ImagenPuntosApp::setup()
 
     midiDetected = false;
 
-    randomPositionControl = false;
-    randomRadiusControl = false;
-    shapeControl = Circle;
     imageNumber = 1;
     profile = 1;
     resolution = 5;
     radiusControl = 1;
     resolutionControl = 1;
-    xControl, yControl = 0;
+    positionControl = 0;
+    randomPositionControl = false;
+    randomRadiusControl = false;
+    shapeControl = Circle;
     rControl, gControl, bControl = 127;
         
     //surfaces.push_back(loadImage("../resources/greco01.jpg"));
@@ -110,14 +104,12 @@ void ImagenPuntosApp::keyDown( KeyEvent event )
         else myMovie.stop();  
           
       }
-    break;
-    
+    break;    
   }
 }
 
 void ImagenPuntosApp::update()
-{
-   
+{   
     Messages type;
     int channel, id, value;
     
@@ -144,12 +136,8 @@ void ImagenPuntosApp::update()
                {
                    if((value>=1)&&(value<=3)) resolutionControl+=0.1;
                    else resolutionControl-=0.1;
-                   if(resolutionControl<0) resolutionControl=0;
-                   
+                   if(resolutionControl<0) resolutionControl=0;                   
                }
-           
-           
-           
            }   
            /*if (type == PitchBend) 
                 {
@@ -194,8 +182,9 @@ void ImagenPuntosApp::update()
             }
             
     break;
-    case 1:
+
     //Mapping para teclado MIDI standard
+    case 1:   
 
     // Lee todos los mensajes midi que estén pendientes en el buffer
     while (ReadMidiMessage(type, channel, id, value)) {
@@ -208,6 +197,9 @@ void ImagenPuntosApp::update()
         }
         else if (id == 0x47) {
           resolutionControl = valueF;
+        }
+        else if (id == 0x5b) {
+          positionControl = valueF;
         }
       }
 
@@ -230,6 +222,7 @@ void ImagenPuntosApp::update()
   
   particleController.setResolution(resolutionControl * 25 + resolution);
   particleController.setRadius(radiusControl);
+  particleController.setPosition(positionControl);
   particleController.setShape(shapeControl);
   particleController.setRandomRadius(randomRadiusControl);
   particleController.setRandomPosition(randomPositionControl);
