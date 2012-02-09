@@ -7,6 +7,7 @@
 #include "ParticleController.h"
 #include <vector>
 #include <iostream>
+#include "Resources.h"
 //#include "SimpleGUI.h"
 
 using namespace ci;
@@ -19,15 +20,15 @@ public:
     void setup();
     void keyDown( KeyEvent event );
     void update();
-    void draw();
-    qtime::MovieSurface	myMovie;
-    bool	VideoPlay;
+    void draw();    
 private:
     //SimpleGUI* gui;
     ParticleController particleController;
     vector<Surface> surfaces;
     gl::Texture background;
     bool midiDetected;
+    qtime::MovieSurface	myMovie;
+    bool	VideoPlay;
 
     int nullCtl1, nullCtl2, nullCtl3;
     bool randomPositionControl, randomRadiusControl;
@@ -52,11 +53,11 @@ private:
 
 void ImagenPuntosApp::setup()
 {
-
     setWindowSize(720,480);
     setFrameRate(30);
     VideoPlay=false;
-    myMovie= qtime::MovieSurface(loadResource("negfxh264.mov"));
+    //myMovie = qtime::MovieSurface(loadResource(VIDEO1));
+    myMovie = qtime::MovieSurface("Medea.mov");
     myMovie.setLoop( true, true );
     //gui = new SimpleGUI(this);
     //gui->lightColor = ColorA(1, 1, 0, 1);	
@@ -68,7 +69,7 @@ void ImagenPuntosApp::setup()
     randomRadiusControl = false;
     shapeControl = Circle;
     imageNumber = 1;
-    profile = 0;
+    profile = 1;
     resolution = 5;
     radiusControl = 1;
     resolutionControl = 1;
@@ -77,10 +78,14 @@ void ImagenPuntosApp::setup()
         
     //surfaces.push_back(loadImage("../resources/greco01.jpg"));
     //surfaces.push_back(loadImage("../resources/greco02.jpg"));
-    background=gl::Texture(loadImage(loadResource("DSC01566.JPG")));
-    surfaces.push_back(loadImage(loadResource("greco01.jpg")));
-    surfaces.push_back(loadImage(loadResource("greco02.jpg")));
-    surfaces.push_back(loadImage(loadResource("el_greco_pieta.jpg")));
+    //background=gl::Texture(loadImage(loadResource(FONDO)));
+    //surfaces.push_back(loadImage(loadResource(IMAGEN1)));
+    //surfaces.push_back(loadImage(loadResource(IMAGEN2)));
+    //surfaces.push_back(loadImage(loadResource(IMAGEN3)));
+    background = gl::Texture(loadImage("prueba2.JPG"));
+    surfaces.push_back(loadImage("greco01.jpg"));
+    surfaces.push_back(loadImage("greco02.jpg"));
+    surfaces.push_back(loadImage("el_greco_pieta.jpg"));
     MidiInit();
        
     //OpenMidiIn(GetMidiDevice());
@@ -223,7 +228,7 @@ void ImagenPuntosApp::update()
   }
 
   
-particleController.setResolution(resolutionControl * 25 + resolution);
+  particleController.setResolution(resolutionControl * 25 + resolution);
   particleController.setRadius(radiusControl);
   particleController.setShape(shapeControl);
   particleController.setRandomRadius(randomRadiusControl);
@@ -240,6 +245,7 @@ void ImagenPuntosApp::draw()
 {
     // clear out the window with black
     gl::clear( Color( 0, 0, 0 ) ); 
+    gl::color(1, 1, 1);
     gl::draw( background, getWindowBounds() );
     if (surfaces[imageNumber])
         particleController.draw();
