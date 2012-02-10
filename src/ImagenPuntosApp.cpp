@@ -50,8 +50,8 @@ void ImagenPuntosApp::setup()
     setWindowSize(720,480);
     setFrameRate(30);
     VideoPlay=false;
-    //myMovie = qtime::MovieSurface(loadResource(VIDEO1));
-    myMovie = qtime::MovieSurface("Medea.mov");
+    myMovie = qtime::MovieSurface(loadResource("negfxh264.mov"));
+    //myMovie = qtime::MovieSurface("Medea.mov");
     myMovie.setLoop( true, true );
     //gui = new SimpleGUI(this);
     //gui->lightColor = ColorA(1, 1, 0, 1);	
@@ -60,7 +60,7 @@ void ImagenPuntosApp::setup()
     midiDetected = false;
 
     imageNumber = 1;
-    profile = 1;
+    profile = 0;
     resolution = 5;
     radiusControl = 1;
     resolutionControl = 1;
@@ -72,15 +72,16 @@ void ImagenPuntosApp::setup()
         
     //surfaces.push_back(loadImage("../resources/greco01.jpg"));
     //surfaces.push_back(loadImage("../resources/greco02.jpg"));
-    //background=gl::Texture(loadImage(loadResource(FONDO)));
-    //surfaces.push_back(loadImage(loadResource(IMAGEN1)));
-    //surfaces.push_back(loadImage(loadResource(IMAGEN2)));
-    //surfaces.push_back(loadImage(loadResource(IMAGEN3)));
-    background = gl::Texture(loadImage("prueba2.JPG"));
+    background=gl::Texture(loadImage(loadResource(FONDO)));
+    surfaces.push_back(loadImage(loadResource("greco01.jpg")));
+    surfaces.push_back(loadImage(loadResource("greco02.jpg")));
+    surfaces.push_back(loadImage(loadResource("el_greco_pieta.jpg")));
+    /*background = gl::Texture(loadImage("prueba2.JPG"));
     surfaces.push_back(loadImage("greco01.jpg"));
     surfaces.push_back(loadImage("greco02.jpg"));
     surfaces.push_back(loadImage("el_greco_pieta.jpg"));
-    MidiInit();
+    */
+     MidiInit();
        
     //OpenMidiIn(GetMidiDevice());
     
@@ -139,18 +140,20 @@ void ImagenPuntosApp::update()
                    if(resolutionControl<0) resolutionControl=0;                   
                }
            }   
-           /*if (type == PitchBend) 
+           if (type == PitchBend) 
                 {
-                if (channel == 0x00)
+                //if (channel == 0x00)
+                  //  {
+                    //radiusControl = valueF;
+                    //}
+                //else 
+                    if (channel== 0x09) 
                     {
-                    radiusControl = valueF;
-                    }
-                else if (channel== 0x09) 
-                    {
-                        resolutionControl = valueF;
+                    //    resolutionControl = valueF;
+                        positionControl = valueF;
                     }
                 }
-             */   
+                
                 // Verifica si corresponde a una nota
                 if (type == NoteOn) 
                 {
@@ -238,7 +241,8 @@ void ImagenPuntosApp::draw()
 {
     // clear out the window with black
     gl::clear( Color( 0, 0, 0 ) ); 
-    gl::color(1, 1, 1);
+    //gl::color color = Color(1.0, 1.0 1.0);
+    //gl::color(color);
     gl::draw( background, getWindowBounds() );
     if (surfaces[imageNumber])
         particleController.draw();
