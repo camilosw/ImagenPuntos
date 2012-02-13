@@ -40,6 +40,7 @@ void ParticleController::setResolution(int value)
 void ParticleController::update(Surface surface)
 {
   float offset = lmap(position, 0.0f, 1.0f, -(float)width, (float)width);
+  Vec2f offsetVector = Vec2f(offset, 0.0);
   for(list<Particle>::iterator p = particles.begin(); p != particles.end(); p++) {
 
     // Determina si la partícula es visible. Si no lo es, continúa con la siguiente
@@ -50,11 +51,11 @@ void ParticleController::update(Surface surface)
     }
 
     // Obtiene el color de un pixel de la imagen
-    ColorA8u color = surface.getPixel(p->getLocation() + Vec2f(offset, 0.0));
+    ColorA8u color = surface.getPixel(p->getLocation() + offsetVector);
     // Obtiene el nivel de gris
-    float gray = (color.r / 255.0f + color.g / 255.0f + color.b / 255.0f) / 3.0f;
+    //float gray = (color.r / 255.0f + color.g / 255.0f + color.b / 255.0f) / 3.0f;
     //float radius = (gray);//+(radius*4.5f);
-    p->setColor(Color(color.r / 255.0f, color.g / 255.0f, color.b / 255.0f));    
+    p->setColor(ColorA(color.r / 255.0f, color.g / 255.0f, color.b / 255.0f, color.a / 255));    
             
     if (randomRadius) {
       p->setRadius(radius * Rand::randFloat( 1.0f, 10.0f));

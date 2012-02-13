@@ -48,6 +48,6 @@ private:
     int x, y;
     Vec2f location;
     float radius;
-    Color color;
+    ColorA color;
     Shapes shape;
 };

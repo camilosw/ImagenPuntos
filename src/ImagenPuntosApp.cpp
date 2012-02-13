@@ -85,7 +85,7 @@ void ImagenPuntosApp::setup()
     //OpenMidiIn(GetMidiDevice());
     
     OpenMidiIn(1);
-    particleController = ParticleController(getWindowWidth(), getWindowHeight(), resolution);
+    particleController = ParticleController(getWindowWidth(), getWindowHeight(), resolution);    
 }
 
 void ImagenPuntosApp::keyDown( KeyEvent event ) 
@@ -95,15 +95,15 @@ void ImagenPuntosApp::keyDown( KeyEvent event )
   case KeyEvent::KEY_ESCAPE:
     quit();
     break;
-    case KeyEvent::KEY_v:
-      {
-      VideoPlay=!VideoPlay;
+  case KeyEvent::KEY_v:
+    {
+      VideoPlay =! VideoPlay;
           
-        if(VideoPlay==true)  // Play
-              myMovie.play();
-        else myMovie.stop();  
-          
-      }
+      if(VideoPlay == true)  // Play
+        myMovie.play();
+      else 
+        myMovie.stop();  
+    }
     break;    
   }
 }
@@ -218,7 +218,6 @@ void ImagenPuntosApp::update()
     
     break;
   }
-
   
   particleController.setResolution(resolutionControl * 25 + resolution);
   particleController.setRadius(radiusControl);
@@ -226,12 +225,13 @@ void ImagenPuntosApp::update()
   particleController.setShape(shapeControl);
   particleController.setRandomRadius(randomRadiusControl);
   particleController.setRandomPosition(randomPositionControl);
-    if(VideoPlay==true)
-    { 
+  if (VideoPlay == true)
+  { 
     Surface frame = myMovie.getSurface();
     particleController.update(frame);
-    }
-    else particleController.update(surfaces[imageNumber]);
+  }
+  else 
+    particleController.update(surfaces[imageNumber]);
 }
 
 void ImagenPuntosApp::draw()
