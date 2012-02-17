@@ -64,7 +64,7 @@ void ImagenPuntosApp::setup()
     resolution = 5;
     radiusControl = 1;
     resolutionControl = 1;
-    positionControl = 0;
+    positionControl = 0.5;
     randomPositionControl = false;
     randomRadiusControl = false;
     shapeControl = Circle;
@@ -142,7 +142,7 @@ void ImagenPuntosApp::update()
            }   
            if (type == PitchBend) 
                 {
-                //if (channel == 0x00)
+                /*if (channel == 0x00)
                   //  {
                     //radiusControl = valueF;
                     //}
@@ -152,7 +152,8 @@ void ImagenPuntosApp::update()
                     //    resolutionControl = valueF;
                         positionControl = valueF;
                     }
-                }
+                */
+                 }
                 
                 // Verifica si corresponde a una nota
                 if (type == NoteOn) 
@@ -241,9 +242,9 @@ void ImagenPuntosApp::draw()
 {
     // clear out the window with black
     gl::clear( Color( 0, 0, 0 ) ); 
-    //gl::color color = Color(1.0, 1.0 1.0);
-    //gl::color(color);
-    gl::draw( background, getWindowBounds() );
+    
+    //gl::color(Color(1.0, 1.0 1.0));
+    //gl::draw( background, getWindowBounds() );
     if (surfaces[imageNumber])
         particleController.draw();
     //gui->draw();
