@@ -21,15 +21,13 @@
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		FA31871214DC4FB500CBFD0F /* greco02.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FA31871014DC4FB500CBFD0F /* greco02.jpg */; };
 		FA31871314DC4FB500CBFD0F /* greco01.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FA31871114DC4FB500CBFD0F /* greco01.jpg */; };
+		FA481BAD14F498C700C29E9A /* negedit.mov in Resources */ = {isa = PBXBuildFile; fileRef = FA481BAC14F498C700C29E9A /* negedit.mov */; };
 		FAA147CA147999700020B007 /* Particle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA147C8147999700020B007 /* Particle.cpp */; };
 		FAA147CB147999700020B007 /* ParticleController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAA147C9147999700020B007 /* ParticleController.cpp */; };
 		FAA6363B14DF220900C355A2 /* el_greco_pieta.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FAA6363A14DF220900C355A2 /* el_greco_pieta.jpg */; };
 		FAA7A9A114DC9E270072D7D8 /* Medea.mov in Resources */ = {isa = PBXBuildFile; fileRef = FAA7A9A014DC9E270072D7D8 /* Medea.mov */; };
 		FAD4673C1479A48900F62897 /* MidiControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAD4673A1479A48900F62897 /* MidiControl.cpp */; };
 		FAD467491479B0CE00F62897 /* libportmidi.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD467481479B0CE00F62897 /* libportmidi.dylib */; };
-		FAF460D314E07CBE00A94D1B /* negfxh264.mov in Resources */ = {isa = PBXBuildFile; fileRef = FAF460D114E07CBE00A94D1B /* negfxh264.mov */; };
-		FAF460D414E07CBE00A94D1B /* negh264.mov in Resources */ = {isa = PBXBuildFile; fileRef = FAF460D214E07CBE00A94D1B /* negh264.mov */; };
-		FAF460D714E08C7E00A94D1B /* DSC01566.JPG in Resources */ = {isa = PBXBuildFile; fileRef = FAF460D614E08C7E00A94D1B /* DSC01566.JPG */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +52,7 @@
 		FA297F5114AE86C800ABB447 /* MidiControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MidiControl.h; path = ../include/MidiControl.h; sourceTree = "<group>"; };
 		FA31871014DC4FB500CBFD0F /* greco02.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = greco02.jpg; path = ../resources/greco02.jpg; sourceTree = "<group>"; };
 		FA31871114DC4FB500CBFD0F /* greco01.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = greco01.jpg; path = ../resources/greco01.jpg; sourceTree = "<group>"; };
+		FA481BAC14F498C700C29E9A /* negedit.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; name = negedit.mov; path = "../../../../BACH SIN TRAMA/of_preRelease_v007_osx/ImagenPuntosOF/resources/negedit.mov"; sourceTree = "<group>"; };
 		FAA147C8147999700020B007 /* Particle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Particle.cpp; path = ../src/Particle.cpp; sourceTree = "<group>"; };
 		FAA147C9147999700020B007 /* ParticleController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ParticleController.cpp; path = ../src/ParticleController.cpp; sourceTree = "<group>"; };
 		FAA147CD1479998B0020B007 /* Particle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Particle.h; path = ../include/Particle.h; sourceTree = "<group>"; };
@@ -65,9 +64,6 @@
 		FAD4673E1479A72600F62897 /* porttime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = porttime.h; path = ../include/porttime.h; sourceTree = "<group>"; };
 		FAD4673F1479A72600F62897 /* portmidi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = portmidi.h; path = ../include/portmidi.h; sourceTree = "<group>"; };
 		FAD467481479B0CE00F62897 /* libportmidi.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libportmidi.dylib; path = usr/local/lib/libportmidi.dylib; sourceTree = SDKROOT; };
-		FAF460D114E07CBE00A94D1B /* negfxh264.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; name = negfxh264.mov; path = ../resources/negfxh264.mov; sourceTree = "<group>"; };
-		FAF460D214E07CBE00A94D1B /* negh264.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; name = negh264.mov; path = ../resources/negh264.mov; sourceTree = "<group>"; };
-		FAF460D614E08C7E00A94D1B /* DSC01566.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = DSC01566.JPG; path = ../resources/DSC01566.JPG; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,13 +164,11 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				FAF460D614E08C7E00A94D1B /* DSC01566.JPG */,
 				FA31871014DC4FB500CBFD0F /* greco02.jpg */,
+				FA481BAC14F498C700C29E9A /* negedit.mov */,
 				FA31871114DC4FB500CBFD0F /* greco01.jpg */,
 				FAA6363A14DF220900C355A2 /* el_greco_pieta.jpg */,
 				FAA7A9A014DC9E270072D7D8 /* Medea.mov */,
-				FAF460D114E07CBE00A94D1B /* negfxh264.mov */,
-				FAF460D214E07CBE00A94D1B /* negh264.mov */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				00CCAF14116A9FEE008396D5 /* CinderApp.icns */,
 			);
@@ -242,9 +236,7 @@
 				FA31871314DC4FB500CBFD0F /* greco01.jpg in Resources */,
 				FAA7A9A114DC9E270072D7D8 /* Medea.mov in Resources */,
 				FAA6363B14DF220900C355A2 /* el_greco_pieta.jpg in Resources */,
-				FAF460D314E07CBE00A94D1B /* negfxh264.mov in Resources */,
-				FAF460D414E07CBE00A94D1B /* negh264.mov in Resources */,
-				FAF460D714E08C7E00A94D1B /* DSC01566.JPG in Resources */,
+				FA481BAD14F498C700C29E9A /* negedit.mov in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

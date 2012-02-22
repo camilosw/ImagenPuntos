@@ -50,7 +50,7 @@ void ImagenPuntosApp::setup()
     setWindowSize(720,480);
     setFrameRate(30);
     VideoPlay=false;
-    myMovie = qtime::MovieSurface(loadResource("negfxh264.mov"));
+    myMovie = qtime::MovieSurface(loadResource("negedit.mov"));
     //myMovie = qtime::MovieSurface("Medea.mov");
     myMovie.setLoop( true, true );
     //gui = new SimpleGUI(this);
@@ -72,7 +72,7 @@ void ImagenPuntosApp::setup()
         
     //surfaces.push_back(loadImage("../resources/greco01.jpg"));
     //surfaces.push_back(loadImage("../resources/greco02.jpg"));
-    background=gl::Texture(loadImage(loadResource(FONDO)));
+    //background=gl::Texture(loadImage(loadResource(FONDO)));
     surfaces.push_back(loadImage(loadResource("greco01.jpg")));
     surfaces.push_back(loadImage(loadResource("greco02.jpg")));
     surfaces.push_back(loadImage(loadResource("el_greco_pieta.jpg")));
